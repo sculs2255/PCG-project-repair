@@ -1,3 +1,5 @@
 <template>
-    <h1>   เเก้ เเล้ว นะครับ </h1>
+<div>
+    <h1> SUn</h1>
+</div>
 </template>
