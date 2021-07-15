@@ -7,9 +7,7 @@
         <v-tab>My case</v-tab>
         <v-menu offset-y>
           <template v-slot:activator="{ on, attrs }">
-            <v-tab color="primary" dark v-bind="attrs" v-on="on">
-              Master
-            </v-tab>
+            <v-tab color="primary" dark v-bind="attrs" v-on="on">Master</v-tab>
           </template>
           <v-list>
             <v-list-item v-for="(item, index) in items" :key="index">
@@ -50,8 +48,7 @@ export default {
           title: "Inspire",
           to: "/status-page"
         },
-        { title: "Master",
-          to: "/master"},
+        { title: "Master", to: "/master" }
       ],
       miniVariant: false,
       right: true,
