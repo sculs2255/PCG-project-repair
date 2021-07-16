@@ -7,9 +7,7 @@
         <v-tab to="/">My case</v-tab>
         <v-menu offset-y transition="scroll-y-transition">
           <template v-slot:activator="{ on, attrs }">
-            <v-tab color="primary" dark v-bind="attrs" v-on="on">
-              Master
-            </v-tab>
+            <v-tab color="primary" dark v-bind="attrs" v-on="on">Master</v-tab>
           </template>
           <v-list>
             <v-list-item v-for="item in items" :key="item" :to="item.to">
@@ -46,10 +44,7 @@ export default {
           title: "User",
           to: "/master"
         },
-        {
-          title: "User",
-          to: "/master"
-        }
+        { title: "Master", to: "/master" }
       ],
       title: "Vuetify.js"
     };

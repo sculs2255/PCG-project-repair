@@ -1,39 +1,59 @@
-<template>
+<template >
   <div>
-    <h1>Personnel</h1>
-
-    <v-simple-table fixed-header height="300px">
-      <template v-slot:default>
-        <thead>
-          <tr>
-            <th class="text-left">Id</th>
-            <th class="text-left">Name</th>
-            <th class="text-left">Status</th>
-            <th class="text-left">Email</th>
-            <th class="text-left">Phone</th>
-            <th class="text-left">Country</th>
-            <th class="text-left">Branch</th>
-            <th class="text-left">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="item in desserts" :key="item.name">
-            <td>{{ item.calories }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.calories }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.calories }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.calories }}</td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
+    <tr>
+      <td>
+        <h1>Personnel</h1>
+      </td>
+      <td>
+        <input type="text" name="search" placeholder="Search.." />
+        <v-btn elevation="2">Search</v-btn>
+      </td>
+    </tr>
+    <br />
+    <tr>
+      <v-sheet color="white" elevation="11" height="400" width="950">
+      <v-simple-table fixed-header height="400px" width="800px">
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">Id</th>
+              <th class="text-left">Name</th>
+              <th class="text-left">Status</th>
+              <th class="text-left">Email</th>
+              <th class="text-left">Phone</th>
+              <th class="text-left">Country</th>
+              <th class="text-left">Branch</th>
+              <th class="text-left">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in desserts" :key="item.name">
+              <td>{{ item.id }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.status }}</td>
+              <td>{{ item.Email }}</td>
+              <td>{{ item.phone }}</td>
+              <td>{{ item.county }}</td>
+              <td>{{ item.branch }}</td>
+              <td>
+                <v-btn depressed color="primary" elevation="2" x-small>Edit</v-btn>
+                <v-btn depressed color="error" elevation="2" x-small>Delete</v-btn>
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+      </v-sheet>
+      <td>
+        <h1>รอใส่ noti</h1>
+      </td>
+    </tr>
   </div>
 
   
 </template>
+
+
 <script>
 export default {
   data() {
@@ -41,43 +61,93 @@ export default {
       desserts: [
         {
           name: "Frozen Yogurt",
-          calories: 159
+          id: 159,
+          status: " It",
+          Email: "Boat0289@hotmail.com",
+          phone: "0922970028",
+          county: "Thailand",
+          branch: "Silom"
         },
         {
           name: "Ice cream sandwich",
-          calories: 237
+          id: 237,
+          status: " It",
+          Email: "Ice_grem@hotmail.com",
+          phone: "0897865461",
+          county: "Thailand",
+          branch: "Silom"
         },
         {
           name: "Eclair",
-          calories: 262
+          id: 262,
+          status: " User",
+          Email: "Eclair_2@hotmail.com",
+          phone: "0922970028",
+          county: "Thailand",
+          branch: "Silom"
         },
         {
           name: "Cupcake",
-          calories: 305
+          id: 305,
+          status: " It",
+          Email: "CupCake12@hotmail.com",
+          phone: "0922970028",
+          county: "Thailand",
+          branch: "Silom"
         },
         {
           name: "Gingerbread",
-          calories: 356
+          id: 356,
+          status: " User",
+          Email: "Gingerbread872@hotmail.com",
+          phone: "0922970028",
+          county: "Thailand",
+          branch: "Silom"
         },
         {
           name: "Jelly bean",
-          calories: 375
+          id: 375,
+          status: " User",
+          Email: "Jelly_007@hotmail.com",
+          phone: "0922970028",
+          county: "Thailand",
+          branch: "Silom"
         },
         {
           name: "Lollipop",
-          calories: 392
+          id: 392,
+          status: " User",
+          Email: "Lollipop@hotmail.com",
+          phone: "0922970028",
+          county: "Thailand",
+          branch: "Silom"
         },
         {
           name: "Honeycomb",
-          calories: 408
+          id: 408,
+          status: " It",
+          Email: "HoneyComb@hotmail.com",
+          phone: "0922970028",
+          county: "Thailand",
+          branch: "Silom"
         },
         {
           name: "Donut",
-          calories: 452
+          id: 452,
+          status: " User",
+          Email: "Donut72@hotmail.com",
+          phone: "0922970028",
+          county: "Thailand",
+          branch: "Silom"
         },
         {
           name: "KitKat",
-          calories: 518
+          id: 518,
+          status: " It",
+          Email: "KITKAT_092@hotmail.com",
+          phone: "0922970028",
+          county: "Thailand",
+          branch: "Silom"
         }
       ]
     };
