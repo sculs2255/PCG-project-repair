@@ -3,24 +3,24 @@
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-toolbar-title v-text="title" />
       <v-tabs align-with-title>
-        <v-tab>Status Case</v-tab>
-        <v-tab>My case</v-tab>
-        <v-menu offset-y>
+        <v-tab to="/status-page">Status Case</v-tab>
+        <v-tab to="/">My case</v-tab>
+        <v-menu offset-y transition="scroll-y-transition">
           <template v-slot:activator="{ on, attrs }">
             <v-tab color="primary" dark v-bind="attrs" v-on="on">
               Master
             </v-tab>
           </template>
           <v-list>
-            <v-list-item v-for="(item, index) in items" :key="index">
+            <v-list-item v-for="item in items" :key="item" :to="item.to">
               <v-list-item-title>{{ item.title }}</v-list-item-title>
             </v-list-item>
           </v-list>
         </v-menu>
       </v-tabs>
-
       <v-spacer />
     </v-app-bar>
+
     <v-main>
       <v-container>
         <Nuxt />
@@ -36,26 +36,21 @@
 export default {
   data() {
     return {
-      clipped: false,
-      drawer: false,
-      fixed: false,
       items: [
         {
-          icon: "mdi-apps",
-          title: "Welcome",
-          to: "/"
+          title: "User",
+          to: "/master",
+          component:'master'
         },
         {
-          name: "status",
-          title: "Inspire",
-          to: "/status-page"
+          title: "User",
+          to: "/master"
         },
-        { title: "Master",
-          to: "/master"},
+        {
+          title: "User",
+          to: "/master"
+        }
       ],
-      miniVariant: false,
-      right: true,
-      rightDrawer: false,
       title: "Vuetify.js"
     };
   }
