@@ -36,13 +36,25 @@ export default {
     return {
       items: [
         {
-          title: "User",
+          title: "Personnel",
           to: "/master",
           component:'master'
         },
         {
-          title: "User",
-          to: "/master"
+          title: "Branch",
+          to: "/Branch"
+        },
+        {
+          title: "Country",
+          to: "/Country"
+        },
+        {
+          title: "Status",
+          to: "/Status_master"
+        },
+        {
+          title: "Priotry",
+          to: "/Priotry"
         },
         { title: "Master", to: "/master" }
       ],
