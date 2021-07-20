@@ -1,7 +1,8 @@
 <template>
   <v-app dark>
+   
     <v-app-bar :clipped-left="clipped" fixed app>
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title  v-text="title" />
       <v-tabs align-with-title>
         <v-tab to="/status-page">Status Case</v-tab>
         <v-tab to="/">My case</v-tab>
@@ -18,14 +19,16 @@
       </v-tabs>
       <v-spacer />
     </v-app-bar>
-
+    
     <v-main>
       <v-container>
         <Nuxt />
       </v-container>
     </v-main>
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+     <v-footer :absolute="!fixed" app class="primary">
+      <span class="bartext" @click="drawer = false">
+        PCG &copy; {{ new Date().getFullYear() }}
+      </span>
     </v-footer>
   </v-app>
 </template>
@@ -63,3 +66,15 @@ export default {
   }
 };
 </script>
+<style lang="scss" scoped>
+.v-application {
+  background-color: #eeeeee !important;
+}
+.sidetext {
+  color: #18315a !important;
+  font-weight: bold;
+}
+.bartext {
+  color: white !important;
+}
+</style>
