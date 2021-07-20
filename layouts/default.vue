@@ -1,9 +1,9 @@
 <template>
-  <v-app >
-    <v-app-bar :clipped-left="clipped" fixed app  class="pcgColor">
+  <v-app>
+    <v-app-bar :clipped-left="clipped" fixed app class="pcgColor">
       <v-toolbar-title style="width:50%" v-text="title" />
-      <v-tabs align-with-title class="sidetext">
-        <v-tab to="/" >My case</v-tab>
+      <v-tabs align-with-title >
+        <v-tab to="/">My case</v-tab>
         <v-tab to="/status-page">Status Case</v-tab>
         <v-menu offset-y transition="scroll-y-transition">
           <template v-slot:activator="{ on, attrs }">
@@ -20,12 +20,14 @@
     </v-app-bar>
 
     <v-main>
-      <v-container >
+      <v-container>
         <Nuxt />
       </v-container>
     </v-main>
-    <v-footer :absolute="!fixed" app>
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+    <v-footer :absolute="!fixed" app class="primary">
+      <span class="bartext" @click="drawer = false">
+        PCG &copy; {{ new Date().getFullYear() }}
+      </span>
     </v-footer>
   </v-app>
 </template>
@@ -36,13 +38,25 @@ export default {
     return {
       items: [
         {
-          title: "User",
+          title: "Personnel",
           to: "/master",
           component: "master"
         },
         {
-          title: "User",
-          to: "/master"
+          title: "Branch",
+          to: "/Branch"
+        },
+        {
+          title: "Country",
+          to: "/Country"
+        },
+        {
+          title: "Status",
+          to: "/Status_master"
+        },
+        {
+          title: "Priotry",
+          to: "/Priotry"
         },
         { title: "Master", to: "/master" }
       ],
@@ -60,4 +74,7 @@ export default {
   font-weight: bold;
 }
 
+.bartext {
+  color: white !important;
+}
 </style>
