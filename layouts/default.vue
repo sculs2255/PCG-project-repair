@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app >
     <v-app-bar :clipped-left="clipped" fixed app class="pcgColor">
       <v-toolbar-title style="width:50%" v-text="title" />
       <v-tabs align-with-title >
