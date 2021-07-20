@@ -1,10 +1,11 @@
 <template>
   <v-container class=" lighten-5 pt-10 pa-0 ma-0" fix>
-    <v-row no-gutters justify="center" align="center">
-      <v-col cols="12"  sm="8" md="8" class="pa-4 ">
-        <statuscase />
+    <v-row no-gutters justify="center" max-height="550px">
+      <v-col cols="8"  class="pa-4 " >
+        <repairCase />
+        
       </v-col>
-      <v-col cols="12"  sm="4" md="2"> 
+      <v-col cols="2" > 
         <comment />
       </v-col>
     </v-row>
@@ -13,13 +14,13 @@
 
 <script>
 
-import statuscase from "/components/Case/status-case.vue"
+import repairCase from "/components/Case/repair-case.vue"
 import comment from "/components/comment/comment.vue"
 
 export default {
   components: {
-    statuscase,
-    comment
+    repairCase,
+    comment,
   }
 };
 </script>
