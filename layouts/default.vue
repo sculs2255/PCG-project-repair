@@ -1,11 +1,10 @@
 <template>
-  <v-app dark>
-   
-    <v-app-bar :clipped-left="clipped" fixed app>
-      <v-toolbar-title  v-text="title" />
-      <v-tabs align-with-title>
+  <v-app >
+    <v-app-bar :clipped-left="clipped" fixed app  class="pcgColor">
+      <v-toolbar-title style="width:50%" v-text="title" />
+      <v-tabs align-with-title >
+        <v-tab to="/" >My case</v-tab>
         <v-tab to="/status-page">Status Case</v-tab>
-        <v-tab to="/">My case</v-tab>
         <v-menu offset-y transition="scroll-y-transition">
           <template v-slot:activator="{ on, attrs }">
             <v-tab color="primary" dark v-bind="attrs" v-on="on">Master</v-tab>
@@ -21,7 +20,7 @@
     </v-app-bar>
     
     <v-main>
-      <v-container>
+      <v-container >
         <Nuxt />
       </v-container>
     </v-main>
@@ -41,7 +40,7 @@ export default {
         {
           title: "Personnel",
           to: "/master",
-          component:'master'
+          component: "master"
         },
         {
           title: "Branch",
@@ -61,7 +60,7 @@ export default {
         },
         { title: "Master", to: "/master" }
       ],
-      title: "It Help Desk"
+      title: "Help Desk IT Support"
     };
   }
 };
@@ -71,10 +70,8 @@ export default {
   background-color: #eeeeee !important;
 }
 .sidetext {
-  color: #18315a !important;
+  color: #18315a;
   font-weight: bold;
 }
-.bartext {
-  color: white !important;
-}
+
 </style>
