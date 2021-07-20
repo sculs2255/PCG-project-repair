@@ -2,7 +2,7 @@
   <v-app >
     <v-app-bar :clipped-left="clipped" fixed app  class="pcgColor">
       <v-toolbar-title style="width:50%" v-text="title" />
-      <v-tabs align-with-title >
+      <v-tabs align-with-title class="sidetext">
         <v-tab to="/" >My case</v-tab>
         <v-tab to="/status-page">Status Case</v-tab>
         <v-menu offset-y transition="scroll-y-transition">
