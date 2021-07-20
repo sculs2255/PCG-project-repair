@@ -61,7 +61,7 @@ export default {
         },
         { title: "Master", to: "/master" }
       ],
-      title: "Vuetify.js"
+      title: "It Help Desk"
     };
   }
 };
