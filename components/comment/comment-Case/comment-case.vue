@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
       <h3 class="ml-5">Notification</h3>
       <v-spacer></v-spacer>
-      <v-btn icon>
+      <v-btn icon @click="Adialog(item)">
         <v-icon color="blue">mdi-comment-edit-outline</v-icon>
       </v-btn>
     </v-card>
@@ -24,19 +24,20 @@
       <v-responsive class="overflow-y-auto " max-height="100%">
         <v-card class="rounded-0 ma-1 mx-auto" flat>
           <v-list two-line>
-            <v-list-item-group >
+            <v-list-item-group>
               <template v-for="(item, i) in items">
                 <v-list-item :key="item.system" v-model="dialog">
-                  <template v-bind="attrs" v-on="on" >
+                  <template v-bind="attrs" v-on="on">
                     <v-list-item-content>
                       <v-list-item-title
                         class="pcgColor--text"
                         v-text="item.system"
                       ></v-list-item-title>
 
-                      <v-list-item-subtitle> 
-                        {{ item.support }}
-                      </v-list-item-subtitle>
+                      <v-list-item-subtitle
+                        class="info--text"
+                        v-text="item.support"
+                      ></v-list-item-subtitle>
 
                       <v-list-item-subtitle
                         v-text="item.topic"
@@ -58,6 +59,45 @@
               </template>
             </v-list-item-group>
 
+            <v-dialog v-model="Adddialog" width="500" persistent>
+              <v-card>
+                <v-card-title class="pcgColor lighten-5">
+                  <span class="text-h5">New Comment</span>
+                </v-card-title>
+                <v-card-text>
+                  <v-container>
+                    <v-select
+                      :items="listQuestion"
+                      label="List Question"
+                      multiple
+                      required
+                    ></v-select>
+                    <v-textarea
+                      label="Description"
+                      filled
+                      solo
+                      rows="4"
+                      no-resize
+                      class="height:50px"
+                    >
+                    </v-textarea>
+                  </v-container>
+                  <small>*indicates required field</small>
+                </v-card-text>
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-btn color="success" text @click="Adddialog = false">
+                    Confirm
+                  </v-btn>
+                  <v-btn color="error" text @click="Adddialog = false">
+                    Cancel
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
             <v-dialog v-model="dialog" max-width="1000" scrollable>
               <v-card>
                 <v-card-title
@@ -66,56 +106,17 @@
                 >
                   Comment
                   <v-spacer></v-spacer>
-                  <v-dialog v-model="Adddialog" width="500" persistent>
-                    <template v-slot:activator="{ on, attrs }">
-                      <v-btn
-                        color="pcgColor"
-                        dark
-                        v-bind="attrs"
-                        v-on="on"
-                        @click="Adddialog = false"
-                      >
-                        <v-icon class="pa-1">mdi-comment-edit-outline</v-icon>
-                        New Comment
-                      </v-btn>
-                    </template>
 
-                    <v-card>
-                      <v-card-title class="pcgColor lighten-5">
-                        <span class="text-h5">New Comment</span>
-                      </v-card-title>
-                      <v-card-text>
-                        <v-container>
-                          <v-select
-                            :items="listQuestion"
-                            label="List Question"
-                            required
-                          ></v-select>
-                          <v-textarea
-                            label="Description"
-                            filled
-                            solo
-                            rows="4"
-                            no-resize
-                            class="height:50px"
-                          >
-                          </v-textarea>
-                        </v-container>
-                        <small>*indicates required field</small>
-                      </v-card-text>
-                      <v-divider></v-divider>
-
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="success" text @click="Adddialog = false">
-                          Confirm
-                        </v-btn>
-                        <v-btn color="error" text @click="Adddialog = false">
-                          Cancel
-                        </v-btn>
-                      </v-card-actions>
-                    </v-card>
-                  </v-dialog>
+                  <v-btn
+                    color="pcgColor"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    @click="Adialog(item)"
+                  >
+                    <v-icon class="pa-1">mdi-comment-edit-outline</v-icon>
+                    New Comment
+                  </v-btn>
                 </v-card-title>
 
                 <v-card-text class="pa-3">
@@ -240,27 +241,6 @@ export default {
           topic: "Topic",
           timedate: "15/07/2564",
           time: "12:30"
-        },
-        {
-          system: "Module Error",
-          support: "Incident",
-          topic: "Topic",
-          timedate: "15/07/2564",
-          time: "12:30"
-        },
-        {
-          system: "System Error",
-          support: "Request",
-          topic: "Topic",
-          timedate: "15/07/2564",
-          time: "12:30"
-        },
-        {
-          system: "Module Error",
-          support: "Request",
-          topic: "Topic",
-          timedate: "15/07/2564",
-          time: "12:30"
         }
       ],
       listQuestion: ["I need file", "I need image"]
@@ -277,9 +257,8 @@ export default {
       else if (priority === "2") return "Medium";
       else return "Low";
     },
-    getSupColor(support) {
-      if (support === "Incident") return "error--text";
-      else return "warning--text";
+    Adialog(item) {
+      this.Adddialog = true;
     }
   }
 };

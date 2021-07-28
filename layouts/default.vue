@@ -104,4 +104,8 @@ export default {
   color: #eeeeee;
   font-weight: bold;
 }
+
+.bartext {
+  color: white !important;
+}
 </style>

@@ -1,8 +1,8 @@
 <template>
-  <v-responsive class="overflow-y-auto" height="500">
+  <v-responsive class="overflow-y-auto" max-height="500">
     <v-row>
       <v-col cols="12" xs="6" sm="12" md="12" lg="6">
-        <v-card class="pa-3" flat>
+        <v-card class="pa-3 ma-5" flat>
           <div v-for="item in cases" :key="item.id">
             <v-card-title class="headline">
               ID Case : {{ item.id }}
@@ -22,7 +22,7 @@
         </v-card>
       </v-col>
       <v-col cols="12" xs="6" sm="12" md="12" lg="6">
-        <v-card class="pa-3" flat>
+        <v-card class="pa-3 ma-5" style="background-color:#EEEEEE">
           <div v-for="item in cases" :key="item.id">
             <v-card-text class="subheading">
               <div class="text--primary pb-4 text-h6">
@@ -42,30 +42,77 @@
               </div>
               <div class="text--primary pb-4 text-body-1">
                 Image :
-                <v-dialog v-model="dialog" width="50%" height="50%">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-img
-                      v-bind="attrs"
-                      v-on="on"
-                      lazy-src="https://picsum.photos/id/11/10/6"
-                      max-height="150"
-                      max-width="250"
-                      src="https://picsum.photos/id/11/500/300"
-                    ></v-img>
-                  </template>
-
-                  <v-card>
-                    <v-img
-                      lazy-src="https://picsum.photos/id/11/10/6"
-                      src="https://picsum.photos/id/11/500/300"
-                    ></v-img>
-                  </v-card>
-                </v-dialog>
+                <v-img
+                  lazy-src="https://picsum.photos/id/11/10/6"
+                  max-height="100"
+                  max-width="150"
+                  src="https://picsum.photos/id/11/500/300"
+                ></v-img>
               </div>
               <div class="text--primary pb-4 text-body-1">
                 Priority :
                 <v-chip :color="getPColor(item.priority)">
                   {{ getPName(item.priority) }}
+                </v-chip>
+              </div>
+            </v-card-text>
+          </div>
+        </v-card>
+      </v-col>
+      <v-col cols="12" xs="6" sm="12" md="12" lg="6">
+        <v-card class="pa-3 ma-5" flat>
+          <div v-for="item in cases" :key="item.id">
+            <div class="text--primary pb-4 text-h6">
+              IT Support Recipient
+            </div>
+            <div class="text--primary pb-4 text-body-1">
+              Name : {{ item.name }}
+            </div>
+          </div>
+        </v-card>
+      </v-col>
+      <v-col cols="12" xs="6" sm="12" md="12" lg="6">
+        <v-card class="pa-3 ma-5" style="background-color:#EEEEEE">
+          <div v-for="item in cases" :key="item.id">
+            <div class="text--primary pb-4 text-h6">
+              Repair Case Information
+            </div>
+            <v-card-text class="subheading">
+              <div class="text--primary pb-4 text-body-1">
+                System : {{ item.system }}
+              </div>
+              <div class="text--primary pb-4 text-body-1">
+                Module : {{ item.module }}
+              </div>
+              <div class="text--primary pb-4 text-body-1">
+                Description : {{ item.module }}
+              </div>
+
+              <div class="text--primary pb-4 text-body-1">
+                Image :
+                <v-chip
+                  v-if="image"
+                  class="ma-2"
+                  close
+                  outlined
+                  color="blue"
+                  @click:close="image = false"
+                >
+                  Image 1
+                </v-chip>
+              </div>
+
+              <div class="text--primary pb-4 text-body-1 ">
+                File :
+                <v-chip
+                  v-if="file"
+                  class="ma-2"
+                  close
+                  color="green"
+                  outlined
+                  @click:close="file = false"
+                >
+                  file 1
                 </v-chip>
               </div>
             </v-card-text>
@@ -80,6 +127,8 @@
 export default {
   data() {
     return {
+      image: true,
+      file: true,
       cases: [
         {
           id: "1",
@@ -100,12 +149,12 @@ export default {
     getPColor(priority) {
       if (priority === "1") return "error";
       else if (priority === "2") return "warning";
-      else if (priority === "3") return "info";
+      else return "info";
     },
     getPName(priority) {
       if (priority === "1") return "High";
       else if (priority === "2") return "Medium";
-      else if (priority === "3") return "Low";
+      else return "Low";
     }
   }
 };

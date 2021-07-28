@@ -1,5 +1,5 @@
 <template>
-  <v-card class="pa-2 rounded-lg elevation-4" >
+  <v-card class="pa-2 rounded-lg elevation-4">
     <v-autocomplete
       v-model="select"
       :loading="loading"
@@ -23,7 +23,6 @@
       :items="caseList"
       :items-per-page="-1"
       hide-default-footer
-      
     >
       <template #[`item.priority`]="{ item }">
         <v-chip :color="getPColor(item.priority)" dark>
@@ -67,28 +66,6 @@ export default {
         { text: "Log", value: "icon" }
       ],
       caseList: [
-        {
-          id: "1",
-          name: "Apichai",
-          nameRecipent: "Suachai",
-          topic: "System Error",
-          priority: 2,
-          status: 1,
-          itRecipent: "",
-          dateTime: "17/07/2564 11:00",
-          icon: "mdi-post"
-        },
-        {
-          id: "2",
-          name: "Apichai",
-          nameRecipent: "",
-          topic: "System Error",
-          priority: 3,
-          status: 2,
-          itRecipent: "Thanarat",
-          dateTime: "15/07/2564 09:54",
-          icon: "mdi-post"
-        },
         {
           id: "3",
           name: "Apichai",
