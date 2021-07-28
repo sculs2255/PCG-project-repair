@@ -1,13 +1,13 @@
 <template>
   <img
-    class="VuetifyLogo"
+    class="PcgLogo"
     
-    src="C:\PCF120721\PCG-project-repair\assets\pc"
+    src="C:\PCF120721\PCG-project-repair\static\pcg_logo2.png"
   >
 </template>
 
 <style>
-.VuetifyLogo {
+.PcgLogo {
   height: 30px;
   width: 30px;
 
