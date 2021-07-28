@@ -1,9 +1,9 @@
 <template>
-  <v-app >
-    <v-app-bar :clipped-left="clipped" fixed app class="pcgColor">
+  <v-app dark>
+    <v-app-bar :clipped-left="clipped" fixed app class="pcgColor primary--text">
       <v-toolbar-title style="width:50%" v-text="title" />
       <v-tabs align-with-title >
-        <v-tab to="/">My case</v-tab>
+        <v-tab to="/my-case">My case</v-tab>
         <v-tab to="/status-page">Status Case</v-tab>
         <v-menu offset-y transition="scroll-y-transition">
           <template v-slot:activator="{ on, attrs }">
@@ -24,7 +24,7 @@
         <Nuxt />
       </v-container>
     </v-main>
-    <v-footer :absolute="!fixed" app class="primary">
+    <v-footer :absolute="!fixed" app class="pri">
       <span class="bartext" @click="drawer = false">
         PCG &copy; {{ new Date().getFullYear() }}
       </span>

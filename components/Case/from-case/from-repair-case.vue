@@ -1,76 +1,149 @@
 <template>
-  <v-row>
-    <v-col cols="6">
-      <v-card class="pa-3" flat>
-        <div v-for="item in cases" :key="item.id">
-          <div class="text--primary pb-4 text-h6">
-            IT Support Recipient
+  <v-responsive class="overflow-y-auto" max-height="500">
+    <v-row
+      ><v-col cols="12" xs="6" sm="12" md="12" lg="6">
+        <v-card class="pa-3" flat>
+          <div v-for="item in cases" :key="item.id">
+            <v-card-title class="headline">
+              ID Case : {{ item.id }}
+            </v-card-title>
+            <v-card-subtitle>
+              {{ item.date }}
+            </v-card-subtitle>
+            <v-card-text class="subheading">
+              <div class="text--primary pb-4 text-h6">
+                User Information
+              </div>
+              <div class="text--primary pb-4 text-body-1">
+                name : {{ item.name }}
+              </div>
+            </v-card-text>
           </div>
-          <div class="text--primary pb-4 text-body-1">
-            Name : {{ item.name }}
+        </v-card>
+      </v-col>
+      <v-col cols="12" xs="6" sm="12" md="12" lg="6">
+        <v-card class="pa-3" flat>
+          <div v-for="item in cases" :key="item.id">
+            <v-card-text class="subheading">
+              <div class="text--primary pb-4 text-h6">
+                Case Information
+              </div>
+              <div class="text--primary pb-4 text-body-1">
+                Type : {{ item.type }}
+              </div>
+              <div class="text--primary pb-4 text-body-1">
+                System : {{ item.system }}
+              </div>
+              <div class="text--primary pb-4 text-body-1">
+                Module : {{ item.module }}
+              </div>
+              <div class="text--primary pb-4 text-body-1">
+                Description : {{ item.description }}
+              </div>
+              <div class="text--primary pb-4 text-body-1">
+                Image :
+                <v-dialog v-model="dialog" width="50%" height="50%">
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-img
+                      v-bind="attrs"
+                      v-on="on"
+                      lazy-src="https://picsum.photos/id/11/10/6"
+                      max-height="150"
+                      max-width="250"
+                      src="https://picsum.photos/id/11/500/300"
+                    ></v-img>
+                  </template>
+
+                  <v-card>
+                    <v-img
+                      lazy-src="https://picsum.photos/id/11/10/6"
+                      src="https://picsum.photos/id/11/500/300"
+                    ></v-img>
+                  </v-card>
+                </v-dialog>
+              </div>
+              <div class="text--primary pb-4 text-body-1">
+                Priority :
+                <v-chip :color="getPColor(item.priority)">
+                  {{ getPName(item.priority) }}
+                </v-chip>
+              </div>
+            </v-card-text>
           </div>
-        </div>
-      </v-card>
-    </v-col>
-    <v-col cols="6">
-      <v-card class="pa-3" flat>
-        <div v-for="item in cases" :key="item.id">
-          <div class="text--primary pb-4 text-h6">
-            Repair Case Information
+        </v-card>
+      </v-col>
+      <v-col cols="12" xs="6" sm="12" md="12" lg="6">
+        <v-card class="pa-3" flat>
+          <div v-for="item in cases" :key="item.id">
+            <div class="text--primary pb-4 text-h6">
+              IT Support Recipient
+            </div>
+            <div class="text--primary pb-4 text-body-1">
+              Name : {{ item.name }}
+            </div>
           </div>
-          <v-card-text class="subheading">
-            <div class="text--primary pb-4 text-body-1">
-              System : {{ item.system }}
+        </v-card>
+      </v-col>
+      <v-col cols="12" xs="6" sm="12" md="12" lg="6">
+        <v-card class="pa-3" flat>
+          <div v-for="item in cases" :key="item.id">
+            <div class="text--primary pb-4 text-h6">
+              Repair Case Information
             </div>
-            <div class="text--primary pb-4 text-body-1">
-              Module : {{ item.module }}
-            </div>
-            <div class="text--primary pb-4 text-body-1">
-              Description :
-              <v-textarea
-                label="Description"
-                filled
-                solo
-                rows="4"
-                no-resize
-                class="height:50px"
-              >
-              </v-textarea>
-            </div>
-            <v-row>
-              <v-col cols="6"
-                ><div class="text--primary pb-4 text-body-1">
-                  Image :
-                  <v-file-input
-                    :rules="rules"
-                    accept="image/png, image/jpeg, image/bmp"
-                    placeholder="Pick an avatar"
-                    prepend-icon="mdi-camera"
-                    label="Image"
-                  ></v-file-input>
-                </div>
-              </v-col>
-              <v-col cols="6">
-                <div class="text--primary pb-4 text-body-1 ">
-                  File :
-                  <v-file-input
-                    truncate-length="10"
-                    label="File Other"
-                  ></v-file-input>
-                </div>
-              </v-col>
-            </v-row>
-            <div class="text--primary pb-4 text-body-1">
-              Priority :
-              <v-chip :color="getPColor(item.priority)">
-                {{ getPName(item.priority) }}
-              </v-chip>
-            </div>
-          </v-card-text>
-        </div>
-      </v-card>
-    </v-col>
-  </v-row>
+            <v-card-text class="subheading">
+              <div class="text--primary pb-4 text-body-1">
+                System : {{ item.system }}
+              </div>
+              <div class="text--primary pb-4 text-body-1">
+                Module : {{ item.module }}
+              </div>
+              <div class="text--primary pb-4 text-body-1">
+                Description :
+                <v-textarea
+                  label="Description"
+                  filled
+                  solo
+                  rows="4"
+                  no-resize
+                  class="height:50px"
+                >
+                </v-textarea>
+              </div>
+              <v-row>
+                <v-col cols="12" xs="6" sm="12" md="12" lg="6">
+                  <div class="text--primary pb-4 text-body-1">
+                    Image :
+                    <v-file-input
+                      :rules="rules"
+                      accept="image/png, image/jpeg, image/bmp"
+                      placeholder="Pick an avatar"
+                      prepend-icon="mdi-camera"
+                      label="Image"
+                    ></v-file-input>
+                  </div>
+                </v-col>
+                <v-col cols="12" sm="6" md="6">
+                  <div class="text--primary pb-4 text-body-1 ">
+                    File :
+                    <v-file-input
+                      truncate-length="10"
+                      label="File Other"
+                    ></v-file-input>
+                  </div>
+                </v-col>
+              </v-row>
+              <div class="text--primary pb-4 text-body-1">
+                Priority :
+                <v-chip :color="getPColor(item.priority)">
+                  {{ getPName(item.priority) }}
+                </v-chip>
+              </div>
+            </v-card-text>
+          </div>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-responsive>
 </template>
 
 <script>
@@ -84,7 +157,7 @@ export default {
           type: "Incident",
           system: "System Error",
           module: "Module Error",
-          description: "",
+          description:  "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi nobis a at voluptates culpa optio amet! Inventore deserunt voluptatem maxime a veniam placeat, eos impedit nulla quos? Officiis, aperiam ducimus.",
           date: "21-06-2021",
           priority: "1",
           status: "1"
