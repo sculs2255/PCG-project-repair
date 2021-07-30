@@ -34,8 +34,8 @@ export default {
   data() {
     return {
       menus: [
-        { title: 'Profile', to: '/id_profile', icon: 'mdi-user' },
-        { title: 'Logout', to: '', icon: 'mdi-sign-out-alt' },
+        { title: 'Profile', to: '/id_profile', icon: 'mdi-account-multiple' },
+        { title: 'Logout', to: '', icon: 'mdi-logout' },
       ],
       // User
       firstname: 'SunSunday',

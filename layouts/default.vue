@@ -1,12 +1,13 @@
 <template>
-  <v-app dark>
-    <v-app-bar :clipped-left="clipped" fixed app class="blue lighten-1">
+  <v-app>
+    <v-app-bar  fixed app class="blue lighten-1">
       <v-img
-        max-height="60"
-        max-width="60"
-        src="https://www.perfectcompanion.com/wp-content/uploads/2020/07/download.png"
-      ></v-img>
-      <v-toolbar-title style="width:50%" v-text="title" />
+        max-height="150"
+        max-width="150"
+        :src="require('@/assets/pcg_logo2.png')"
+      >
+      </v-img>
+      <v-toolbar-title style="width:50%" class="pa-1" v-text="title" />
       <v-tabs align-with-title>
         <v-tab to="/my-case">My case</v-tab>
         <v-tab to="/status-page">Status Case</v-tab>
@@ -25,7 +26,6 @@
         <v-spacer />
 
         <AvatarButton />
-       
       </v-tabs>
       <v-spacer />
     </v-app-bar>
@@ -44,24 +44,24 @@
 </template>
 
 <script>
-import AvatarButton from '~/components/navbar/AvatarButton.vue'
+import AvatarButton from "~/components/navbar/AvatarButton.vue";
 export default {
-   components: {
-    AvatarButton,
+  components: {
+    AvatarButton
   },
   data() {
     return {
-
       show1: false,
-        show2: true,
-        show3: false,
-        show4: false,
-        password: 'Password',
-        rules: {
-          required: value => !!value || 'Required.',
-          min: v => v.length >= 8 || 'Min 8 characters',
-          emailMatch: () => (`The email and password you entered don't match`),
-        },
+      show2: true,
+      show3: false,
+      show4: false,
+      password: "Password",
+      rules: {
+        required: value => !!value || "Required.",
+        min: v => v.length >= 8 || "Min 8 characters",
+        emailMatch: () => `The email and password you entered don't match`
+      },
+
       items: [
         {
           title: "Personnel",

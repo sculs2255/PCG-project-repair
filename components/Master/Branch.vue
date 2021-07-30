@@ -27,7 +27,7 @@
       
      <template #[`item.icon`]="">
          <v-dialog
-      v-model="dialog"
+      v-model="bdialog"
       width="300"
     >
       <template v-slot:activator="{ on, attrs }">
@@ -78,14 +78,14 @@
           <v-btn
             color="red"
             text
-            @click="dialog = true"
+            @click="bdialog = false"
           >
             Close
           </v-btn>
           <v-btn
             color="green"
             text
-            @click="dialog = false"
+            @click="bdialog = false"
           >
             Save
           </v-btn>
@@ -95,7 +95,7 @@
     </v-dialog>
 
      <v-dialog
-      v-model="dialog"
+      v-model="adialog"
       width="500"
     >
       <template v-slot:activator="{ on, attrs }">
@@ -121,14 +121,14 @@
           <v-btn
             color="green"
             text
-            @click="dialog = false"
+            @click="adialog = false"
           >
             I accept
           </v-btn>
           <v-btn
             color="red"
             text
-            @click="dialog = false"
+            @click="adialog = false"
           >
             Cancel
           </v-btn>
@@ -145,6 +145,8 @@
 export default {
   data() {
     return {
+      adialog: false,
+      bdialog: false,
       headers: [
         { text: "Branch", value: "branch" },
         
