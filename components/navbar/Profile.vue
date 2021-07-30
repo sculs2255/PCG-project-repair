@@ -71,7 +71,7 @@
             </v-dialog>
           </p>
           <h3>Personal Information</h3>
-          <p>Name : Sinit Manop</p>
+          <p>Name : SunSunday SubPORT</p>
           <p>Department : It Support</p>
           <p>Sex : Male</p>
           <p>
@@ -106,7 +106,7 @@
             </v-dialog>
           </p>
           <p>
-            Email : Sanit0892_@hotmail.com
+            Email : Sunday_0289@gmail.com
             <v-dialog v-model="dialog3" width="300">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn class="ma" color="cyan" dark v-bind="attrs" v-on="on" x-small>

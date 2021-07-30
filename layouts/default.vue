@@ -1,15 +1,12 @@
 <template>
   <v-app dark>
 
-    <v-app-bar :clipped-left="clipped" fixed app class="pcgColor primary--text">
-      <v-toolbar-title style="width:50%" v-text="title" />
-      <v-tabs align-with-title >
-        <v-tab to="/my-case">My case</v-tab>
+      
     <v-app-bar :clipped-left="clipped" fixed app class="blue lighten-1">
       <v-img
         max-height="60"
         max-width="60"
-        src="https://www.perfectcompanion.com/wp-content/uploads/2020/07/download.png"
+        src="https://scontent.fbkk22-3.fna.fbcdn.net/v/t1.6435-9/225043930_4271671072913131_1136427142730689445_n.jpg?_nc_cat=103&ccb=1-3&_nc_sid=730e14&_nc_eui2=AeGNQANdHf4RorSJ5_mUrq5fjm3jiCJY7J-ObeOIIljsnwnZVN8dPK9i9X894aqkiqXJOCYlP2CsNuz8FZTE31ty&_nc_ohc=LL_A6tI74QUAX-qCxqj&tn=RcKZ3Qv40AIwuFMu&_nc_ht=scontent.fbkk22-3.fna&oh=4fe958a4d639d81f44497cba6a4a0340&oe=61284D6E"
       ></v-img>
       <v-toolbar-title style="width:50%" v-text="title" />
       <v-tabs align-with-title>
