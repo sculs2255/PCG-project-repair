@@ -1,11 +1,5 @@
 <template>
   <v-app dark>
-<<<<<<< HEAD
-    <v-app-bar :clipped-left="clipped" fixed app class="pcgColor primary--text">
-      <v-toolbar-title style="width:50%" v-text="title" />
-      <v-tabs align-with-title >
-        <v-tab to="/my-case">My case</v-tab>
-=======
     <v-app-bar :clipped-left="clipped" fixed app class="blue lighten-1">
       <v-img
         max-height="60"
@@ -14,8 +8,7 @@
       ></v-img>
       <v-toolbar-title style="width:50%" v-text="title" />
       <v-tabs align-with-title>
-        <v-tab to="/">My case</v-tab>
->>>>>>> Boat028
+        <v-tab to="/my-case">My case</v-tab>
         <v-tab to="/status-page">Status Case</v-tab>
         <v-menu offset-y transition="scroll-y-transition">
           <template v-slot:activator="{ on, attrs }">
@@ -42,15 +35,10 @@
         <Nuxt />
       </v-container>
     </v-main>
-<<<<<<< HEAD
     <v-footer :absolute="!fixed" app class="pri">
       <span class="bartext" @click="drawer = false">
         PCG &copy; {{ new Date().getFullYear() }}
       </span>
-=======
-    <v-footer :absolute="!fixed" app class="blue lighten-1">
-      <span class="bartext" @click="drawer = false">PCG &copy; {{ new Date().getFullYear() }}</span>
->>>>>>> Boat028
     </v-footer>
   </v-app>
 </template>
@@ -118,11 +106,8 @@ export default {
   color: #eeeeee;
   font-weight: bold;
 }
-<<<<<<< HEAD
 
 .bartext {
   color: white !important;
 }
-=======
->>>>>>> Boat028
 </style>

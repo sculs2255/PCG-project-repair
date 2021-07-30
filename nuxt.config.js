@@ -53,12 +53,8 @@ export default {
       light: false,
       themes: {
         light: {
-<<<<<<< HEAD
-          primary: '#1E88E5',
-=======
-          primary: '#FFFFFF',
+          primary: '#19335A',
           primarys: '#555555',
->>>>>>> Boat028
           accent: '#E91E63',
           secondary: '#9C27b0',
           info: '#00CAE3',

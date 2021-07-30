@@ -4,11 +4,7 @@
       <v-col cols="12" xs="12" sm="12" md="8" lg="9" xl="8" class="pa-4 ">
         <statuscase />
       </v-col>
-<<<<<<< HEAD
       <v-col cols="12" xs="12" sm="12" md="4" lg="3" xl="2" class="pa-4 "> 
-=======
-      <v-col cols="12"  sm="4" md="3"> 
->>>>>>> Boat028
         <comment />
       </v-col>
     </v-row>
