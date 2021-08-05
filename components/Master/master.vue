@@ -25,11 +25,7 @@
       
       hide-default-footer
     >
-      <template #[`item.priority`]="{ item }">
-        <v-chip :color="getColor(item.priority)" dark>
-          {{ item.priority }}
-        </v-chip>
-      </template>
+     
       <template #[`item.status`]="{ item }">
         <v-chip :color="getSColor(item.status)" dark>
           {{ item.status }}
@@ -48,6 +44,8 @@
           dark
           v-bind="attrs"
           v-on="on"
+          x-small
+          elevation="3"
         >
           <v-icon>mdi-wrench</v-icon>
           
@@ -161,6 +159,8 @@
           dark
           v-bind="attrs"
           v-on="on"
+          x-small
+          elevation="3"
         >
             <v-icon> mdi-cancel</v-icon>
         </v-btn>
@@ -201,10 +201,9 @@
 export default {
   data() {
     return {
-       adialog: false,
-      bdialog: false,
+       
       headers: [
-        { text: "ID", value: "id" },
+       
         { text: "Name", value: "name" },
         { text: "Status", value: "status" },
         { text: "Email", value: "email" },
@@ -369,7 +368,7 @@ export default {
     }
   },
   methods: {
-    
+     
     getSColor(status) {
       if (status == "User") return "grey";
       else if (status == "It") return "blue lighten-1";

@@ -10,7 +10,7 @@
       ></v-img>
       <v-toolbar-title style="width:50%" v-text="title" />
       <v-tabs align-with-title>
-        <v-tab to="/">My case</v-tab>
+        <v-tab to="/my-case">My case</v-tab>
 
         <v-tab to="/status-page">Status Case</v-tab>
         <v-menu offset-y transition="scroll-y-transition">
