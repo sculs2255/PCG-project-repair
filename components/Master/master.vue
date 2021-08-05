@@ -24,18 +24,32 @@
       :items-per-page="-1"
       hide-default-footer
     >
+     
       <template #[`item.status`]="{ item }">
         <v-chip :color="getSColor(item.status)" dark>
           {{ item.status }}
         </v-chip>
       </template>
       <template #[`item.icon`]="">
-        <v-dialog v-model="adialog" width="700">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn class="ma-0" color="green" dark v-bind="attrs" v-on="on">
-              <v-icon>mdi-wrench</v-icon>
-            </v-btn>
-          </template>
+         <v-dialog
+      v-model="adialog"
+      width="700"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        
+       <v-btn
+          class="ma-0"
+          color="green"
+          dark
+          v-bind="attrs"
+          v-on="on"
+          x-small
+          elevation="3"
+        >
+          <v-icon>mdi-wrench</v-icon>
+          
+        </v-btn>
+      </template>
 
           <v-card>
             <v-card-title>
@@ -48,18 +62,23 @@
                     <v-text-field label="ID*" required></v-text-field>
                   </v-col>
 
-                  <v-col cols="12" sm="10" md="8">
-                    <v-text-field label=" Name*" required></v-text-field>
-                  </v-col>
-                  <v-col cols="12" sm="10" md="8">
-                    <v-text-field label=" Status*" required></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field label="Email*" required></v-text-field>
-                  </v-col>
-                  <v-col cols="12">
-                    <v-text-field label="Phone*" required></v-text-field>
-                  </v-col>
+    </v-dialog>
+         <v-dialog
+      v-model="bdialog"
+      width="500"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="red "
+          dark
+          v-bind="attrs"
+          v-on="on"
+          x-small
+          elevation="3"
+        >
+            <v-icon> mdi-cancel</v-icon>
+        </v-btn>
+      </template>
 
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field label="Country*" required></v-text-field>
@@ -114,7 +133,9 @@
 export default {
   data() {
     return {
+       
       headers: [
+       
         { text: "Name", value: "name" },
         { text: "Status", value: "status" },
         { text: "Email", value: "email" },
@@ -253,6 +274,7 @@ export default {
     }
   },
   methods: {
+     
     getSColor(status) {
       if (status == "User") return "grey";
       else if (status == "It") return "blue lighten-1";
