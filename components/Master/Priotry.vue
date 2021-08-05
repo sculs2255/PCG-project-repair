@@ -144,8 +144,7 @@
 export default {
   data() {
     return {
-       adialog: false,
-      bdialog: false,
+
       headers: [
         { text: "Description", value: "description" },
         { text: "Priority", value: "priority" },

@@ -152,8 +152,7 @@
 export default {
   data() {
     return {
-       adialog: false,
-      bdialog: false,
+
       headers: [
         
         { text: "Country", value: "country" },
