@@ -88,11 +88,12 @@
 
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="success" text @click="Adddialog = false">
-                    Confirm
-                  </v-btn>
+
                   <v-btn color="error" text @click="Adddialog = false">
                     Cancel
+                  </v-btn>
+                  <v-btn color="success" text @click="Adddialog = false">
+                    Confirm
                   </v-btn>
                 </v-card-actions>
               </v-card>
@@ -128,7 +129,12 @@
                             ID Case : {{ item.id }}
                           </v-card-title>
                           <v-card-subtitle>
-                            {{ item.date }}
+                            <div>
+                              วันที่แจ้งแคส {{ item.date }} -- {{ item.time }}
+                            </div>
+                            <div>
+                              วันที่รับแคส {{ item.date }} -- {{ item.time }}
+                            </div>
                           </v-card-subtitle>
                           <v-card-text class="subheading">
                             <div class="text--primary pb-4 text-h6">

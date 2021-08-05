@@ -1,19 +1,19 @@
 <template>
   <v-stepper v-model="e1" alt-labels max-height="700px" >
     <v-stepper-header >
-      <v-stepper-step :complete="e1 > 1" step="1" class="success--text">
+      <v-stepper-step :complete="e1 > 1" step="1" color="success" >
         New Case
       </v-stepper-step>
 
       <v-divider></v-divider>
 
-      <v-stepper-step :complete="e1 > 2" step="2">
+      <v-stepper-step :complete="e1 > 2" step="2" color="success">
         In Progress
       </v-stepper-step>
 
       <v-divider></v-divider>
 
-      <v-stepper-step step="3">
+      <v-stepper-step step="3" color="success">
         Complete
       </v-stepper-step>
     </v-stepper-header>
@@ -30,12 +30,12 @@
           class="pa-3"
           color="grey lighten-3"
         >
-          <v-btn color="pri" @click="e1 = 2">
+          <v-btn text color="pri" @click="e1 = 2">
             Accept
           </v-btn>
 
-          <v-btn color="accent" to="./status-page"> <v-icon>mdi-home</v-icon> Home </v-btn>
-          <v-btn color="error" depressed @click="dialog = true">
+          <v-btn text color="accent" to="./status-page"> <v-icon>mdi-home</v-icon> Home </v-btn>
+          <v-btn text color="error" depressed @click="dialog = true">
             Cancel
           </v-btn>
         </v-card>
@@ -52,12 +52,12 @@
           class="pa-3"
           color="grey lighten-3"
         >
-          <v-btn color="pri"  @click="e1 = 3">
+          <v-btn text color="pri"  @click="e1 = 3">
             Continue
           </v-btn>
 
-          <v-btn  color="accent" to="./status-page"> <v-icon>mdi-home</v-icon> Home </v-btn>
-          <v-btn color="error" @click="dialog = true">
+          <v-btn text color="accent" to="./status-page"> <v-icon>mdi-home</v-icon> Home </v-btn>
+          <v-btn text color="error" @click="dialog = true">
             Cancel
           </v-btn>
         </v-card>
@@ -74,11 +74,11 @@
           class="pa-3"
           color="grey lighten-3"
         >
-          <v-btn color="pri" to="./status-page">
+          <v-btn text color="pri" to="./status-page">
             Complete
           </v-btn>
 
-          <v-btn color="accent" @click="e1 = 2"> Edit </v-btn>
+          <v-btn text color="accent" @click="e1 = 2"> Edit </v-btn>
         </v-card>
       </v-stepper-content>
     </v-stepper-item>
@@ -124,10 +124,10 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="error" @click="dialog = false">
+          <v-btn text color="error" @click="dialog = false">
             Close
           </v-btn>
-          <v-btn color="primary" @click="dialog = false" to="./status-page">
+          <v-btn text color="success" @click="dialog = false" to="./status-page">
             Save
           </v-btn>
         </v-card-actions>

@@ -1,15 +1,17 @@
 <template>
   <v-app>
-    <v-app-bar  fixed app class="blue lighten-1">
+    <v-app-bar  fixed app  color="pcgColor white--text">
       <v-img
         max-height="150"
         max-width="150"
         :src="require('@/assets/pcg_logo2.png')"
       >
       </v-img>
-      <v-toolbar-title style="width:50%" class="pa-1" v-text="title" />
-      <v-tabs align-with-title>
-        <v-tab to="/my-case">My case</v-tab>
+      <v-toolbar-title style="width:350px" class="pa-1" v-text="title" />
+      <v-spacer></v-spacer>
+      <v-tabs align-with-title color="white"  dark>
+        <v-spacer></v-spacer>
+        <v-tab to="/my-case" >My case</v-tab>
         <v-tab to="/status-page">Status Case</v-tab>
         <v-menu offset-y transition="scroll-y-transition">
           <template v-slot:activator="{ on, attrs }">
