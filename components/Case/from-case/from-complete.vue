@@ -8,7 +8,8 @@
               ID Case : {{ item.id }}
             </v-card-title>
             <v-card-subtitle>
-              {{ item.date }}
+              <div>วันที่แจ้งแคส {{ item.date }} -- {{ item.time }}</div>
+              <div>วันที่รับแคส {{ item.date }} -- {{ item.time }}</div>
             </v-card-subtitle>
             <v-card-text class="subheading">
               <div class="text--primary pb-4 text-h6">
@@ -139,6 +140,7 @@ export default {
           description:
             "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quasi nobis a at voluptates culpa optio amet! Inventore deserunt voluptatem maxime a veniam placeat, eos impedit nulla quos? Officiis, aperiam ducimus.",
           date: "21-06-2021",
+          time: "12:30",
           priority: "1",
           status: "1"
         }

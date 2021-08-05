@@ -25,16 +25,16 @@
         <v-card class="rounded-0 ma-1 mx-auto" flat>
           <v-list two-line>
             <v-list-item-group >
-              <template v-for="(item, i) in items">
+              <template v-for="(item, i) in items" >
                 <v-list-item :key="item.system" v-model="dialog">
-                  <template v-bind="attrs" v-on="on" >
+                  <template>
                     <v-list-item-content>
                       <v-list-item-title
                         class="pcgColor--text"
                         v-text="item.system"
                       ></v-list-item-title>
 
-                      <v-list-item-subtitle> 
+                      <v-list-item-subtitle>
                         {{ item.support }}
                       </v-list-item-subtitle>
 
@@ -53,7 +53,6 @@
                     </v-list-item-action>
                   </template>
                 </v-list-item>
-
                 <v-divider v-if="i < items.length - 1" :key="i"></v-divider>
               </template>
             </v-list-item-group>
@@ -107,11 +106,11 @@
 
                       <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="success" text @click="Adddialog = false">
-                          Confirm
-                        </v-btn>
+
                         <v-btn color="error" text @click="Adddialog = false">
-                          Cancel
+                          Cancel </v-btn
+                        ><v-btn color="success" text @click="Adddialog = false">
+                          Confirm
                         </v-btn>
                       </v-card-actions>
                     </v-card>
@@ -127,7 +126,12 @@
                             ID Case : {{ item.id }}
                           </v-card-title>
                           <v-card-subtitle>
-                            {{ item.date }}
+                            <div>
+                              วันที่แจ้งแคส {{ item.date }} -- {{ item.time }}
+                            </div>
+                            <div>
+                              วันที่รับแคส {{ item.date }} -- {{ item.time }}
+                            </div>
                           </v-card-subtitle>
                           <v-card-text class="subheading">
                             <div class="text--primary pb-4 text-h6">

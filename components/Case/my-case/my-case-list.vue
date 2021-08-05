@@ -9,10 +9,10 @@
       flat
       hide-no-data
       hide-details
-      label="What state are you from?"
+      label="Select Case"
       solo-inverted
       class="ma-2 rounded-pill"
-      style="width:25%"
+      style="width:40%"
     ></v-autocomplete>
 
     <v-data-table
@@ -34,16 +34,14 @@
           {{ getSName(item.status) }}
         </v-chip>
       </template>
-      <template #[`item.icon`]="{ item }">
+      <template #[`item.button`]>
         <v-btn
-          icon
+          small
           elevation="3"
-          fab
-          x-small
           color="info"
           to="./repair-case-page"
         >
-          <v-icon>{{ item.icon }}</v-icon>
+          <v-icon>mdi-card-search-outline</v-icon>
         </v-btn>
       </template>
     </v-data-table>
@@ -63,7 +61,7 @@ export default {
         { text: "Status", value: "status" },
         { text: "IT Recipent", value: "itRecipent" },
         { text: "Date", value: "dateTime" },
-        { text: "Log", value: "icon" }
+        { text: "Action", value: "button", filterable: false ,sortable: false }
       ],
       caseList: [
         {
@@ -75,7 +73,7 @@ export default {
           status: 3,
           itRecipent: "Supaporn Jaila",
           dateTime: "15/07/2564 12:30",
-          icon: "mdi-post"
+      
         },
         {
           id: "4",
@@ -86,7 +84,7 @@ export default {
           status: 4,
           itRecipent: "Supaporn Jaila",
           dateTime: "15/07/2564 12:30",
-          icon: "mdi-post"
+      
         }
       ]
     };

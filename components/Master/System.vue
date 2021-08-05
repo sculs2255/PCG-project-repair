@@ -12,7 +12,7 @@
       label="System"
       solo-inverted
       class="ma-2 rounded-pill"
-      style="width:25%"
+      style="width:40%"
     ></v-autocomplete>
 
     <v-data-table

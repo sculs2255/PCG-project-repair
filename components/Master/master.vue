@@ -12,7 +12,7 @@
       label="Personnal"
       solo-inverted
       class="ma-2 rounded-pill"
-      style="width:25%"
+      style="width:40%"
     ></v-autocomplete>
 
     <v-data-table
@@ -115,7 +115,6 @@ export default {
   data() {
     return {
       headers: [
-        { text: "ID", value: "id" },
         { text: "Name", value: "name" },
         { text: "Status", value: "status" },
         { text: "Email", value: "email" },
