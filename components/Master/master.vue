@@ -12,7 +12,7 @@
       label="Personnal"
       solo-inverted
       class="ma-2 rounded-pill"
-      style="width:40%"
+      style="width:25%"
     ></v-autocomplete>
 
     <v-data-table
@@ -24,32 +24,25 @@
       :items-per-page="-1"
       hide-default-footer
     >
-     
       <template #[`item.status`]="{ item }">
         <v-chip :color="getSColor(item.status)" dark>
           {{ item.status }}
         </v-chip>
       </template>
-      <template #[`item.icon`]="">
-         <v-dialog
-      v-model="adialog"
-      width="700"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        
-       <v-btn
-          class="ma-0"
-          color="green"
-          dark
-          v-bind="attrs"
-          v-on="on"
-          x-small
-          elevation="3"
-        >
-          <v-icon>mdi-wrench</v-icon>
-          
-        </v-btn>
-      </template>
+      <template #[`item.icon`]>
+        <v-dialog v-model="adialog" width="700">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              class="ma-0"
+              color="green"
+              dark
+              v-bind="attrs"
+              v-on="on"
+              elevation="3"
+            >
+              <v-icon>mdi-wrench</v-icon>
+            </v-btn>
+          </template>
 
           <v-card>
             <v-card-title>
@@ -62,24 +55,18 @@
                     <v-text-field label="ID*" required></v-text-field>
                   </v-col>
 
-    </v-dialog>
-         <v-dialog
-      v-model="bdialog"
-      width="500"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="red "
-          dark
-          v-bind="attrs"
-          v-on="on"
-          x-small
-          elevation="3"
-        >
-            <v-icon> mdi-cancel</v-icon>
-        </v-btn>
-      </template>
-
+                  <v-col cols="12" sm="10" md="8">
+                    <v-text-field label=" Name*" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="10" md="8">
+                    <v-text-field label=" Status*" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field label="Email*" required></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-text-field label="Phone*" required></v-text-field>
+                  </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field label="Country*" required></v-text-field>
                   </v-col>
@@ -102,18 +89,17 @@
             </v-card-actions>
           </v-card>
         </v-dialog>
+
         <v-dialog v-model="bdialog" width="500">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="red " dark v-bind="attrs" v-on="on">
               <v-icon> mdi-cancel</v-icon>
             </v-btn>
           </template>
-
           <v-card>
             <v-card-title class="text-h4 red" color="red">
               Do you want to delete?
             </v-card-title>
-
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="green" text @click="bdialog = false">
@@ -129,25 +115,23 @@
     </v-data-table>
   </v-card>
 </template>
+
 <script>
 export default {
   data() {
     return {
-       
+      adialog: false,
       headers: [
-       
         { text: "Name", value: "name" },
         { text: "Status", value: "status" },
         { text: "Email", value: "email" },
         { text: "Phone", value: "phone" },
         { text: "Country", value: "country" },
         { text: "Branch", value: "branch" },
-
         { text: "Action", value: "icon" }
       ],
       caseList: [
         {
-          id: "1",
           name: "Apichai",
           status: "IT",
           email: "Systemap@hotmail.com",
@@ -156,7 +140,6 @@ export default {
           branch: "Silom"
         },
         {
-          id: "2",
           name: "Apinan",
           status: "User",
           email: "Apinan02@hotmail.com",
@@ -165,7 +148,6 @@ export default {
           branch: "Silom"
         },
         {
-          id: "3",
           name: "Somphong",
           status: "User",
           email: "somphong73@hotmail.com",
@@ -174,7 +156,6 @@ export default {
           branch: "Silom"
         },
         {
-          id: "4",
           name: "Manob nob",
           status: "IT",
           email: "Manob_nob2@hotmail.com",
@@ -183,7 +164,6 @@ export default {
           branch: "Silom"
         },
         {
-          id: "5",
           name: " Aakchai",
           status: "User",
           email: "Aakchai29@hotmail.com",
@@ -192,7 +172,6 @@ export default {
           branch: "Silom"
         },
         {
-          id: "6",
           name: "Banramee",
           status: "IT",
           email: "barn168_@hotmail.com",
@@ -201,7 +180,6 @@ export default {
           branch: "Silom"
         },
         {
-          id: "7",
           name: " Savinee",
           status: "IT",
           email: "KITKAT_092@hotmail.com",
@@ -212,7 +190,6 @@ export default {
           icon: "mdi-post"
         },
         {
-          id: "8",
           name: "Frozen Yogurt",
           status: "User",
           email: "Frozen Yogurt_p@hotmail.com",
@@ -221,7 +198,6 @@ export default {
           branch: "Silom"
         },
         {
-          id: "9",
           name: "Kriason",
           status: "IT",
           email: "Kriason_21p@hotmail.com",
@@ -230,7 +206,6 @@ export default {
           branch: "Silom"
         },
         {
-          id: "10",
           name: "NaNew",
           status: "User",
           email: "NaNew02881@hotmail.com",
@@ -239,7 +214,6 @@ export default {
           branch: "Silom"
         },
         {
-          id: "11",
           name: "Ko Ko",
           status: "IT",
           email: "KKKooo13@hotmail.com",
@@ -248,7 +222,6 @@ export default {
           branch: "Silom"
         },
         {
-          id: "12",
           name: "Nengko",
           status: "IT",
           email: "Nengko_22@hotmail.com",
@@ -257,7 +230,6 @@ export default {
           branch: "Silom"
         },
         {
-          id: "13",
           name: "Kamonnob",
           status: "IT",
           email: "nobnobb.@hotmail.com",
@@ -274,7 +246,6 @@ export default {
     }
   },
   methods: {
-     
     getSColor(status) {
       if (status == "User") return "grey";
       else if (status == "It") return "blue lighten-1";
