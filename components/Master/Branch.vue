@@ -24,23 +24,26 @@
       :items-per-page="-1"
       hide-default-footer
     >
-      
+
      <template #[`item.icon`]="">
          <v-dialog
       v-model="bdialog"
       width="300"
     >
       <template v-slot:activator="{ on, attrs }">
-        
+
        <v-btn
           class="ma-0"
           color="green"
           dark
           v-bind="attrs"
           v-on="on"
+          x-small
+          elevation="3"
+
         >
           <v-icon>mdi-wrench</v-icon>
-          
+
         </v-btn>
       </template>
 
@@ -53,7 +56,7 @@
             <v-row>
               <v-col
                 cols="12"
-                
+
               >
                 <v-text-field
                   label="Edit Brunch"
@@ -68,7 +71,7 @@
                   required
                 ></v-text-field>
               </v-col>
-                 
+
             </v-row>
           </v-container>
           <small>*indicates required field</small>
@@ -104,6 +107,9 @@
           dark
           v-bind="attrs"
           v-on="on"
+           x-small
+          elevation="3"
+
         >
             <v-icon> mdi-cancel</v-icon>
         </v-btn>
@@ -111,9 +117,9 @@
 
       <v-card>
         <v-card-title class="text-h4 red" color="red">
-          
+
           Do you want to delete?
-          
+
         </v-card-title>
 
         <v-card-actions>
@@ -135,9 +141,9 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-        
+
       </template>
-      
+
     </v-data-table>
   </v-card>
 </template>
@@ -148,30 +154,33 @@ export default {
 
       headers: [
         { text: "Branch", value: "branch" },
-        
+
         { text: "Branch", value: "branch" },
-        
+        { text: "", value: "descri" },
+        { text: "", value: "descri" },
+        { text: "", value: "descri" },
+
         { text: "Action", value: "icon" },
-       
+
       ],
       caseList: [
         {
-          
+
           branch: "Silom",
            country: "Thailand",
-          
+
         },
         {
-           
+
           branch: "Empire Tower",
            country: "Thailand",
         },
         {
-        
+
           branch: "Samutprakarn",
            country: "Thailand",
         },
-       
+
       ]
     };
   },
@@ -181,11 +190,11 @@ export default {
     }
   },
   methods: {
-    
+
     getSColor(status) {
       if (status == "User") return "grey";
       else if (status == "It") return "blue lighten-1";
-     
+
       else return "success";
     },
     querySelections(v) {

@@ -23,7 +23,7 @@
       :items="caseList"
       :items-per-page="-1"
       hide-default-footer
-      
+
     >
       <template #[`item.priority`]="{ item }">
         <v-chip :color="getPColor(item.priority)" dark>
@@ -74,7 +74,7 @@ export default {
           status: 1,
           itRecipent: "",
           dateTime: "17/07/2564 11:00",
-        
+
         },
         {
           id: "2",
@@ -85,7 +85,7 @@ export default {
           status: 2,
           itRecipent: "Thanarat",
           dateTime: "15/07/2564 09:54",
-         
+
         },
         {
           id: "3",
@@ -96,7 +96,7 @@ export default {
           status: 3,
           itRecipent: "Supaporn Jaila",
           dateTime: "15/07/2564 12:30",
-        
+
         },
         {
           id: "4",
@@ -107,7 +107,7 @@ export default {
           status: 4,
           itRecipent: "Supaporn Jaila",
           dateTime: "15/07/2564 12:30",
-         
+
         }
       ]
     };

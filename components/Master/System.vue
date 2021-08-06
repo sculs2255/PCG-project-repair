@@ -22,27 +22,29 @@
       :headers="headers"
       :items="caseList"
       :items-per-page="-1"
-      
+
       hide-default-footer
     >
-      
-    
+
+
      <template #[`item.icon`]="">
          <v-dialog
       v-model="adialog"
       width="500"
     >
       <template v-slot:activator="{ on, attrs }">
-        
+
        <v-btn
           class="ma-0"
           color="green"
           dark
           v-bind="attrs"
           v-on="on"
+          x-small
+          elevation="3"
         >
           <v-icon>mdi-wrench</v-icon>
-          
+
         </v-btn>
       </template>
 
@@ -61,7 +63,7 @@
                   required
                 ></v-text-field>
               </v-col>
-              
+
             </v-row>
           </v-container>
           <small>*indicates required field</small>
@@ -96,6 +98,8 @@
           dark
           v-bind="attrs"
           v-on="on"
+          x-small
+          elevation="3"
         >
             <v-icon> mdi-cancel</v-icon>
         </v-btn>
@@ -103,9 +107,9 @@
 
       <v-card>
         <v-card-title class="text-h4 red" color="red">
-          
+
           Do you want to delete?
-          
+
         </v-card-title>
 
         <v-card-actions>
@@ -128,7 +132,7 @@
       </v-card>
     </v-dialog>
       </template>
-      
+
     </v-data-table>
   </v-card>
 </template>
@@ -136,36 +140,39 @@
 export default {
   data() {
     return {
-     
+
       headers: [
         { text: "System", value: "system" },
         { text: "Module", value: "module" },
-       
+        { text: "", value: "branch" },
+        { text: "", value: "descri" },
+         { text: "", value: "descri" },
+        { text: "", value: "descri" },
         { text: "Action", value: "icon" },
-       
+
       ],
       caseList: [
         {
           system: "System1",
           module: "Module1",
-          
+
         },
         {
          system: "System2",
          module: "Module2",
-          
+
         },
         {
           system: "System3",
           module: "Module3",
-          
+
         },
         {
          system: "System4",
          module: "Module4",
-          
+
         },
-       
+
       ]
     };
   },
@@ -175,11 +182,11 @@ export default {
     }
   },
   methods: {
-    
+
     getSColor(status) {
       if (status == "User") return "grey";
       else if (status == "It") return "blue lighten-1";
-     
+
       else return "success";
     },
     querySelections(v) {

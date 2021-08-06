@@ -1,6 +1,6 @@
 <template>
   <v-card class="pa-2 rounded-lg elevation-4">
-    <v-autocomplete
+   <v-autocomplete
       v-model="select"
       :loading="loading"
       :items="items"
@@ -18,22 +18,23 @@
     <v-data-table
       fixed-header
       height="550px"
+      width="800px"
       :search="select"
       :headers="headers"
       :items="caseList"
       :items-per-page="-1"
       hide-default-footer
     >
-
-      <template #[`item.status`]="{ item }">
+<template #[`item.status`]="{ item }">
         <v-chip :color="getSColor(item.status)" dark>
           {{ item.status }}
         </v-chip>
+
       </template>
-      <template #[`item.icon`]="">
+     <template #[`item.icon`]="">
          <v-dialog
-      v-model="adialog"
-      width="700"
+      v-model="bdialog"
+      width="300"
     >
       <template v-slot:activator="{ on, attrs }">
 
@@ -51,20 +52,65 @@
         </v-btn>
       </template>
 
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">Edit Personnal</span>
-            </v-card-title>
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field label="ID*" required></v-text-field>
-                  </v-col>
+       <v-card>
+        <v-card-title class= "grey lighten-2">
+          <span class="text-h5">Edit Country</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col
+                cols="12"
+
+              >
+                <v-text-field
+                  label="Edit Country"
+                  required
+                ></v-text-field>
+              </v-col>
+                <v-col
+                cols="12"
+              >
+                <v-text-field
+                  label="Edit Branch"
+                  required
+                ></v-text-field>
+              </v-col>
+                 <v-col
+                cols="12"
+              >
+                <v-text-field
+                  label="Edit Description"
+                  required
+                ></v-text-field>
+              </v-col>
+            </v-row>
+          </v-container>
+          <small>*indicates required field</small>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="red"
+            text
+            @click="bdialog = true"
+          >
+            Close
+          </v-btn>
+          <v-btn
+            color="green"
+            text
+            @click="bdialog = false"
+          >
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
 
     </v-dialog>
-         <v-dialog
-      v-model="bdialog"
+
+     <v-dialog
+      v-model="adialog"
       width="500"
     >
       <template v-slot:activator="{ on, attrs }">
@@ -80,53 +126,35 @@
         </v-btn>
       </template>
 
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field label="Country*" required></v-text-field>
-                  </v-col>
+      <v-card>
+        <v-card-title class="text-h4 red" color="red">
 
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field label=" Branch*" required></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-              <small>*indicates required field</small>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="red" text @click="adialog = false">
-                Close
-              </v-btn>
-              <v-btn color="green" text @click="adialog = false">
-                Save
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
+          Do you want to delete?
 
-        <v-dialog v-model="bdialog" width="500">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn color="red " dark v-bind="attrs" v-on="on">
-              <v-icon> mdi-cancel</v-icon>
-            </v-btn>
-          </template>
+        </v-card-title>
 
-          <v-card>
-            <v-card-title class="text-h4 red" color="red">
-              Do you want to delete?
-            </v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="green"
+            text
+            @click="adialog = false"
+          >
+            I accept
+          </v-btn>
+          <v-btn
+            color="red"
+            text
+            @click="adialog = false"
+          >
+            Cancel
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="green" text @click="bdialog = false">
-                I accept
-              </v-btn>
-              <v-btn color="red" text @click="bdialog = false">
-                Cancel
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
       </template>
+
     </v-data-table>
   </v-card>
 </template>
@@ -134,26 +162,25 @@
 export default {
   data() {
     return {
-      headers: [
 
+      headers: [
         { text: "Name", value: "name" },
         { text: "Status", value: "status" },
         { text: "Email", value: "email" },
         { text: "Phone", value: "phone" },
         { text: "Country", value: "country" },
         { text: "Branch", value: "branch" },
-
-        { text: "Action", value: "icon" }
+        { text: "Action", value: "icon" },
       ],
       caseList: [
-        {
+         {
           id: "1",
           name: "Apichai",
           status: "IT",
           email: "Systemap@hotmail.com",
           phone: "092-297-0028",
           country: "Thailand",
-          branch: "Silom"
+          branch: "Silom",
         },
         {
           id: "2",
@@ -162,7 +189,7 @@ export default {
           email: "Apinan02@hotmail.com",
           phone: "092-675-4621",
           country: "Thailand",
-          branch: "Silom"
+          branch: "Silom",
         },
         {
           id: "3",
@@ -171,7 +198,7 @@ export default {
           email: "somphong73@hotmail.com",
           phone: "081-827-5363",
           country: "Thailand",
-          branch: "Silom"
+          branch: "Silom",
         },
         {
           id: "4",
@@ -180,7 +207,9 @@ export default {
           email: "Manob_nob2@hotmail.com",
           phone: "089-768-5433",
           country: "Thailand",
-          branch: "Silom"
+          branch: "Silom",
+          branch: "3",
+          descri : "Silom , Empire ,Samutprakarn",
         },
         {
           id: "5",
@@ -189,7 +218,9 @@ export default {
           email: "Aakchai29@hotmail.com",
           phone: "091-927-5363",
           country: "Thailand",
-          branch: "Silom"
+          branch: "Silom",
+          country: "Malaysia",
+          branch: "",
         },
         {
           id: "6",
@@ -198,7 +229,8 @@ export default {
           email: "barn168_@hotmail.com",
           phone: "098-765-4567",
           country: "Thailand",
-          branch: "Silom"
+          branch: "Silom",
+          country: "Singapore",
         },
         {
           id: "7",
@@ -209,7 +241,8 @@ export default {
           country: "Thailand",
           branch: "Silom",
 
-          icon: "mdi-post"
+          icon: "mdi-post",
+
         },
         {
           id: "8",
@@ -218,7 +251,7 @@ export default {
           email: "Frozen Yogurt_p@hotmail.com",
           phone: "092-276-2876",
           country: "Thailand",
-          branch: "Silom"
+          branch: "Silom",
         },
         {
           id: "9",
@@ -227,7 +260,7 @@ export default {
           email: "Kriason_21p@hotmail.com",
           phone: "085-803-7767",
           country: "Thailand",
-          branch: "Silom"
+          branch: "Silom",
         },
         {
           id: "10",
@@ -236,7 +269,8 @@ export default {
           email: "NaNew02881@hotmail.com",
           phone: "087-662-5041",
           country: "Thailand",
-          branch: "Silom"
+          branch: "Silom",
+          country: "India",
         },
         {
           id: "11",
@@ -245,7 +279,7 @@ export default {
           email: "KKKooo13@hotmail.com",
           phone: "089-756-4532",
           country: "Thailand",
-          branch: "Silom"
+          branch: "Silom",
         },
         {
           id: "12",
@@ -254,7 +288,7 @@ export default {
           email: "Nengko_22@hotmail.com",
           phone: "089-803-6643",
           country: "Thailand",
-          branch: "Silom"
+          branch: "Silom",
         },
         {
           id: "13",
@@ -263,7 +297,7 @@ export default {
           email: "nobnobb.@hotmail.com",
           phone: "089-134-5674",
           country: "Thailand",
-          branch: "Silom"
+          branch: "Silom",
         }
       ]
     };
@@ -274,9 +308,11 @@ export default {
     }
   },
   methods: {
+
     getSColor(status) {
       if (status == "User") return "grey";
       else if (status == "It") return "blue lighten-1";
+
       else return "success";
     },
     querySelections(v) {
