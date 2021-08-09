@@ -1,30 +1,17 @@
 <template>
   <div class="container">
-    <form >
-    <div class="field">
-      <p class="control has-icons-left has-icons-right">
-        <input class="input" type="email" placeholder="Email" />
-        <span class="icon is-small is-left">
-          <i class="fas fa-envelope"></i>
-        </span>
-        <span class="icon is-small is-right">
-          <i class="fas fa-check"></i>
-        </span>
-      </p>
-    </div>
-    <div class="field">
-      <p class="control has-icons-left">
-        <input class="input" type="password" placeholder="Password" />
-        <span class="icon is-small is-left">
-          <i class="fas fa-lock"></i>
-        </span>
-      </p>
-    </div>
+    <form @submit="onSubmit">
+      <v-col cols="10">
+        <v-text-field v-model="first" label="User Name" outlined></v-text-field>
+      </v-col>
+
+      <v-col cols="10">
+        <v-text-field v-model="last" label="Password" outlined></v-text-field>
+      </v-col>
+      <v-btn elevation="2" cols="10" >Login</v-btn>
     </form>
   </div>
 </template>
-
-
 
 <script>
 export default {};
@@ -39,6 +26,4 @@ export default {};
   align-items: center;
   text-align: center;
 }
-</style>>
-
-
+</style>
