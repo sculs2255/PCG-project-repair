@@ -121,7 +121,7 @@ export default {
   data() {
     return {
       adialog: false,
-      bdialog: false,
+      bdialog:false,
       headers: [
         { text: "Name", value: "name" },
         { text: "Status", value: "status" },
