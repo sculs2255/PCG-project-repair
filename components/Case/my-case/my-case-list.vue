@@ -39,7 +39,7 @@
           small
           elevation="3"
           color="info"
-          to="./repair-case-page"
+          to="/Repair-Case/repair-case-page"
         >
           <v-icon>mdi-card-search-outline</v-icon>
         </v-btn>

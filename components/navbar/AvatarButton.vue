@@ -2,14 +2,13 @@
   <div class="text-center">
     <v-menu offset-y min-width="200px" rounded="lg">
       <template #activator="{ on, attrs }">
-        <v-btn icon x-large class="ma-1" v-bind="attrs" v-on="on">
-          <v-avatar color="accent" size="40">
+        <v-btn icon x-large class="ml-5" v-bind="attrs" v-on="on">
+          <v-avatar color="accent">
             <span class="white--text text-h5">
               {{ firstname.substring(0, 1) }}{{ lastname.substring(0, 1) }}
             </span>
           </v-avatar>
         </v-btn>
-        {{ firstname }}
       </template>
       <v-card>
         <v-list-item-content class="justify-center">
@@ -23,6 +22,15 @@
                 <v-icon right>{{ item.icon }}</v-icon>
               </v-btn>
             </div>
+
+             <div >
+              <v-divider class="my-3"></v-divider>
+                <v-btn depressed rounded text @click="logOut" >
+               LOGOUT
+                <v-icon right>fa-sign-out-alt</v-icon>
+              </v-btn>
+             </div>
+
           </div>
         </v-list-item-content>
       </v-card>
@@ -35,14 +43,21 @@ export default {
   data() {
     return {
       menus: [
-        { title: "Profile", to: "/id_profile", icon: "mdi-account-multiple" },
-        { title: "Logout", to: "", icon: "mdi-logout" }
+        { title: 'Profile', to: '/profile', icon: 'fa-user' },
+        { title: 'Change Password', to: '/password', icon: 'fa-lock' },
       ],
       // User
-      firstname: "SunSunday",
-      lastname: "SubPORT",
-      email: "Sunday_0289@gmail.com"
-    };
-  }
-};
+      firstname: 'Teerapat',
+      lastname: 'Satitporn',
+      email: 'example@gmail.com',
+    }
+  },
+   methods: {
+     async logOut(){
+         await this.$auth.logout();
+         this.$router.push("/login");
+      }
+
+   }
+}
 </script>
