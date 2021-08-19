@@ -14,7 +14,7 @@
 
 <script>
 
-import repairCase from "/components/Case/repair-case.vue"
+import repairCase from "/components/Case/RepairCase/repair-case.vue"
 import comment from "/components/comment/comment-Case/comment-case.vue"
 
 export default {

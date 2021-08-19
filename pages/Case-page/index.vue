@@ -13,7 +13,7 @@
 
 <script>
 
-import statuscase from "/components/Case/status-case.vue"
+import statuscase from "/components/Case/StatusCase/status-case.vue"
 import comment from "/components/comment/comment.vue"
 
 export default {
