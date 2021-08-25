@@ -63,7 +63,6 @@
               <v-btn
                 type="submit"
                 class="my-5 btn-hover color-5"
-
                 :loading="loading"
                 depressed
                 rounded
@@ -75,7 +74,6 @@
               <v-btn
                 type="button"
                 class="my-5 btn-hover color-11"
-
                 depressed
                 rounded
                 @click="$emit('clickCancel')"

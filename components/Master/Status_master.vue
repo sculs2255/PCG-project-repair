@@ -1,201 +1,148 @@
 <template>
-  <v-card class="pa-2 rounded-lg elevation-4">
-   <v-autocomplete
-      v-model="select"
-      :loading="loading"
-      :items="items"
-      :search-input.sync="search"
-      cache-items
-      flat
-      hide-no-data
-      hide-details
-      label="Status"
-      solo-inverted
-      class="ma-2 rounded-pill"
-      style="width:40%"
-    ></v-autocomplete>
+  <v-data-table :headers="headers" :items="desserts" sort-by="calories" class="elevation-1">
+    <template v-slot:top>
+      <v-toolbar flat color="white">
+        <v-toolbar-title>Status</v-toolbar-title>
+        <v-divider class="mx-4" inset vertical></v-divider>
+        <v-spacer></v-spacer>
+        <v-dialog v-model="dialog" max-width="500px">
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on">New Item</v-btn>
+          </template>
+          <v-card>
+            <v-card-title>
+              <span class="headline">{{ formTitle }}</span>
+            </v-card-title>
 
-    <v-data-table
-      fixed-header
-      height="550px"
-      :search="select"
-      :headers="headers"
-      :items="caseList"
-      :items-per-page="-1"
+<v-card-text>
+              <v-container>
+                <v-row>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.fat" label="IdStatus "></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="editedItem.name" label="Status"></v-text-field>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-card-text>
 
-      hide-default-footer
-    >
-
-
-     <template #[`item.icon`]="">
-         <v-dialog
-      v-model="adialog"
-      width="500"
-    >
-      <template v-slot:activator="{ on, attrs }">
-
-       <v-btn
-          class="ma-0"
-          color="green"
-          dark
-          v-bind="attrs"
-          v-on="on"
-          x-small
-          elevation="3"
-        >
-          <v-icon>mdi-wrench</v-icon>
-
-        </v-btn>
-      </template>
-
-       <v-card>
-        <v-card-title>
-          <span class="text-h5">Edit Status</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-              <v-col
-                cols="12"
-              >
-                <v-text-field
-                  label="Edit Status*"
-                  required
-                ></v-text-field>
-              </v-col>
-
-            </v-row>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="red"
-            text
-            @click="adialog = false"
-          >
-            Close
-          </v-btn>
-          <v-btn
-            color="green"
-            text
-            @click="adialog = false"
-          >
-            Save
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-
-    </v-dialog>
-         <v-dialog
-      v-model="bdialog"
-      width="500"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="red "
-          dark
-          v-bind="attrs"
-          v-on="on"
-          x-small
-          elevation="3"
-        >
-            <v-icon> mdi-cancel</v-icon>
-        </v-btn>
-      </template>
-
-      <v-card>
-        <v-card-title class="text-h4 red" color="red">
-
-          Do you want to delete?
-
-        </v-card-title>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="green"
-            text
-            @click="bdialog = false"
-          >
-            I accept
-          </v-btn>
-          <v-btn
-            color="red"
-            text
-            @click="bdialog = false"
-          >
-            Cancel
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-      </template>
-
-    </v-data-table>
-  </v-card>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="blue darken-1" text @click="close">Cancel</v-btn>
+              <v-btn color="blue darken-1" text @click="save">Save</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-toolbar>
+    </template>
+    <template v-slot:item.actions="{ item }">
+      <v-icon small class="mr-2" @click="editItem(item)">mdi-pencil</v-icon>
+      <v-icon small @click="deleteItem(item)">mdi-delete</v-icon>
+    </template>
+    <template v-slot:no-data>
+      <v-btn color="primary" @click="initialize">Reset</v-btn>
+    </template>
+  </v-data-table>
 </template>
 <script>
 export default {
-  data() {
-    return {
-
-      headers: [
-        { text: "Status", value: "status" },
-        { text: "", value: "branch" },
-        { text: "", value: "descri" },
-         { text: "", value: "descri" },
-         { text: "", value: "branch" },
-        { text: "", value: "descri" },
-        { text: "Action", value: "icon" },
-
-      ],
-      caseList: [
-        {
-          status: "New Case",
+  name: "HelloWorld",
+  data: () => ({
+    dialog: false,
+    headers: [
 
 
-        },
-        {
-          status: "In Process",
+      { text: "IdStatus", value: "fat" },
+       {
+        text: "Status",
+        align: "start",
+        sortable: false,
+        value: "name",
 
-        },
-        {
-          status: "Cancel",
-
-        },
-        {
-          status: "Complete",
-
-        },
-
-      ]
-    };
-  },
-  watch: {
-    search(val) {
-      val && val !== this.select && this.querySelections(val);
-    }
-  },
-  methods: {
-
-    getSColor(status) {
-      if (status == "User") return "grey";
-      else if (status == "It") return "blue lighten-1";
-
-      else return "success";
+      },
+      { text: "Actions", value: "actions", sortable: false },
+    ],
+    desserts: [],
+    editedIndex: -1,
+    editedItem: {
+      name: "",
+      calories: 0,
+      fat: 0,
+      carbs: 0,
+      protein: 0,
     },
-    querySelections(v) {
-      this.loading = true;
-      // Simulated ajax query
-      setTimeout(() => {
-        this.items = this.caseList.filter(e => {
-          return (e || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1;
-        });
-        this.loading = false;
-      }, 500);
-    }
-  }
+    defaultItem: {
+      name: "",
+      calories: 0,
+      fat: 0,
+      carbs: 0,
+      protein: 0,
+    },
+  }),
+
+  computed: {
+    formTitle() {
+      return this.editedIndex === -1 ? "New Item" : "Edit Item";
+    },
+  },
+
+  watch: {
+    dialog(val) {
+      val || this.close();
+    },
+  },
+
+  created() {
+    this.initialize();
+  },
+
+  methods: {
+    initialize() {
+      this.desserts = [
+        {
+          name: "New Case",
+          fat: 1,
+        },
+        {
+          name: "Cancel",
+          fat: 2,
+        },
+        {
+          name: "In Process",
+          fat: 3,
+        },
+      ];
+    },
+
+    editItem(item) {
+      this.editedIndex = this.desserts.indexOf(item);
+      this.editedItem = Object.assign({}, item);
+      this.dialog = true;
+    },
+
+    deleteItem(item) {
+      const index = this.desserts.indexOf(item);
+      confirm("Are you sure you want to delete this item?") &&
+        this.desserts.splice(index, 1);
+    },
+
+    close() {
+      this.dialog = false;
+      this.$nextTick(() => {
+        this.editedItem = Object.assign({}, this.defaultItem);
+        this.editedIndex = -1;
+      });
+    },
+
+    save() {
+      if (this.editedIndex > -1) {
+        Object.assign(this.desserts[this.editedIndex], this.editedItem);
+      } else {
+        this.desserts.push(this.editedItem);
+      }
+      this.close();
+    },
+  },
 };
 </script>

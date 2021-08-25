@@ -1,6 +1,5 @@
 <template>
   <v-card class="pa-2 rounded-lg elevation-4">
-    {{ caseList }}
     <v-autocomplete
       cache-items
       flat
