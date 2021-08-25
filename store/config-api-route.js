@@ -18,5 +18,8 @@ export default {
   case: {
     main: url + '/Case',
   },
+  status: {
+    main: url + '/Status',
+  },
 
 }
