@@ -1,77 +1,50 @@
 <template>
-  <v-card class="pa-2 rounded-lg elevation-4">
-   <v-autocomplete
-      v-model="select"
-      :loading="loading"
+  <v-card class="pa-2 rounded-lg elevation-4 " >
+      <v-card class="d-flex " flat>
+    <v-autocomplete
+       :loading="loading"
       :items="items"
       :search-input.sync="search"
       cache-items
       flat
       hide-no-data
       hide-details
-      label="Brunch"
+      label="Branch"
       solo-inverted
       class="ma-2 rounded-pill"
-      style="width:40%"
+      style="width:400px"
     ></v-autocomplete>
-
-    <v-data-table
-      fixed-header
-      height="550px"
-      :search="select"
-      :headers="headers"
-      :items="caseList"
-      :items-per-page="-1"
-      hide-default-footer
-    >
-
-     <template #[`item.icon`]="">
-         <v-dialog
-      v-model="bdialog"
-      width="300"
+    <v-dialog
+      v-model="adialog"
+      width="500"
     >
       <template v-slot:activator="{ on, attrs }">
-
        <v-btn
-          class="ma-0"
+          class="ma-3"
           color="green"
           dark
           v-bind="attrs"
           v-on="on"
-          x-small
           elevation="3"
-
         >
-          <v-icon>mdi-wrench</v-icon>
-
+          <v-icon>mdi-plus-thick</v-icon>
         </v-btn>
       </template>
-
        <v-card>
-        <v-card-title class= "grey lighten-2">
-          <span class="text-h5">Edit Brunch</span>
+        <v-card-title>
+          <span class="text-h5">Add Status</span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
               <v-col
                 cols="12"
-
               >
                 <v-text-field
-                  label="Edit Brunch"
+                  label="Add Status*"
                   required
                 ></v-text-field>
               </v-col>
-                <v-col
-                cols="12"
-              >
-                <v-text-field
-                  label="Edit Country"
-                  required
-                ></v-text-field>
-              </v-col>
-
             </v-row>
           </v-container>
           <small>*indicates required field</small>
@@ -81,24 +54,51 @@
           <v-btn
             color="red"
             text
-            @click="bdialog = false"
+            @click="adialog = false"
           >
             Close
           </v-btn>
           <v-btn
             color="green"
             text
-            @click="bdialog = false"
+            @click="adialog = false"
           >
             Save
           </v-btn>
         </v-card-actions>
       </v-card>
-
     </v-dialog>
+    </v-card>
 
-     <v-dialog
-      v-model="adialog"
+
+    <!-- Table-->
+    <v-data-table
+      fixed-header
+      height="550px"
+      :loading="loading_dts"
+      :headers="headers"
+      :items="caseList.data"
+      :options.sync="optionDataTables"
+      :server-items-length="caseList.totalItems"
+       sort-by="id"
+      class="datatable-listing-app"
+      :items-per-page="-1"
+      hide-default-footer
+    >
+     <template #[`item.icon`]="" >
+   <v-btn
+          class="ma-0"
+          color="#1E88E5"
+          dark
+          v-bind="attrs"
+          v-on="on"
+          x-small
+          elevation="3"
+        >
+          <v-icon>mdi-pencil</v-icon>
+        </v-btn>
+         <v-dialog
+      v-model="bdialog"
       width="500"
     >
       <template v-slot:activator="{ on, attrs }">
@@ -107,9 +107,8 @@
           dark
           v-bind="attrs"
           v-on="on"
-           x-small
+          x-small
           elevation="3"
-
         >
             <v-icon> mdi-cancel</v-icon>
         </v-btn>
@@ -127,86 +126,92 @@
           <v-btn
             color="green"
             text
-            @click="adialog = false"
+            @click="bdialog = false"
           >
             I accept
           </v-btn>
           <v-btn
             color="red"
             text
-            @click="adialog = false"
+            @click="bdialog = false"
           >
             Cancel
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-
       </template>
 
     </v-data-table>
   </v-card>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-
+      filter: {
+        textSearch: "",
+        pageSize: 10,
+        pageNumber: 0,
+        caseTypeID: 0
+      },
+      optionDataTables: {},
+      loading_dts: false,
       headers: [
-        { text: "Branch", value: "branch" },
-
-        { text: "Branch", value: "branch" },
-        { text: "", value: "descri" },
-        { text: "", value: "descri" },
-        { text: "", value: "descri" },
-
-        { text: "Action", value: "icon" },
-
-      ],
-      caseList: [
+        { text: "Branch ID", value: "branchID", filterable: false },
+        { text: "CountryID ", value: "countryID", filterable: false },
+        { text: "BranchName", value: "branchName", filterable: false },
         {
-
-          branch: "Silom",
-           country: "Thailand",
-
-        },
-        {
-
-          branch: "Empire Tower",
-           country: "Thailand",
-        },
-        {
-
-          branch: "Samutprakarn",
-           country: "Thailand",
-        },
-
+          text: "Details / Cancel Case",
+          value: "button",
+          filterable: false,
+          sortable: false
+        }
       ]
     };
   },
-  watch: {
-    search(val) {
-      val && val !== this.select && this.querySelections(val);
+ computed: {
+    ...mapGetters({
+      branchList: "branch/list"
+    })
+  },
+   watch: {
+    optionDataTables: {
+      handler() {
+        this._getDataList();
+      }
+    },
+    deep: true
+  },
+methods: {
+    ...mapActions({
+      getDataList: "case/getDataList"
+    }),
+    async _getDataList() {
+      const { page, itemsPerPage, sortBy, sortDesc } = this.optionDataTables;
+      this.filter.sortOrder = sortBy;
+      if (sortDesc == "true") {
+        this.filter.sortOrder = sortBy + "_desc";
+      }
+      this.filter.pageSize = itemsPerPage;
+      this.filter.pageNumber = page;
+      this.loading_dts = true;
+      await this.getDataList(this.filter);
+      this.loading_dts = false;
+    },
+    getPColor(priorityID) {
+      if (priorityID === 1) return "error";
+      else if (priorityID === 2) return "warning";
+      else if (priorityID === 3) return "info";
+    },
+    getPName(priorityID) {
+      if (priorityID === 1) return "High";
+      else if (priorityID === 2) return "Medium";
+      else if (priorityID === 3) return "Low";
     }
   },
-  methods: {
-
-    getSColor(status) {
-      if (status == "User") return "grey";
-      else if (status == "It") return "blue lighten-1";
-
-      else return "success";
-    },
-    querySelections(v) {
-      this.loading = true;
-      // Simulated ajax query
-      setTimeout(() => {
-        this.items = this.caseList.filter(e => {
-          return (e || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1;
-        });
-        this.loading = false;
-      }, 500);
-    }
-  }
+  async fetch() {}
 };
+
 </script>
