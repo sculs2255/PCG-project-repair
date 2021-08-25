@@ -1,14 +1,14 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="4 text-center">
+    <v-col cols="4 text-center" >
       <v-container>
-        <v-form
+      <v-form
           ref="form"
           v-model="valid"
           lazy-validation
           @submit.prevent="submit()"
           autocompete="new"
-          class="mx-10"
+          class=" mx-10"
           autocomplete="off"
         >
           <v-row>
@@ -46,7 +46,7 @@
                 outlined
                 icon="mdi-alert-rhombus"
               >
-                เกิดข้อผิดผลาด ไม่สามารถเข้าระบบได้กรุณากรอกใหม่อีกครั้ง
+                เกิดข้อผิดผลาด ไม่สามารถเข้าระบบได้
               </v-alert>
             </v-col>
           </v-row>
@@ -55,7 +55,7 @@
             <div v-for="(error, index) in alert_errors" :key="'error_' + index">
               {{ error }}
             </div>
-            เกิดข้อผิดผลาด ไม่สามารถเข้าระบบได้กรุณากรอกใหม่อีกครั้ง
+            เกิดข้อผิดผลาด ไม่สามารถเข้าระบบได้
           </v-alert>
 
           <v-row>
@@ -89,6 +89,8 @@
           <v-col cols="12">
             <hr />
           </v-col>
+
+
         </v-form>
       </v-container>
     </v-col>
@@ -96,9 +98,10 @@
 </template>
 
 <script>
+
 export default {
   layout: "blank",
-  data() {
+    data() {
     return {
       loading: false,
       show_pwd: false,
@@ -134,7 +137,7 @@ export default {
             this.error_msg = auth.data.error_description;
             await this.$auth.logout();
           } else {
-            window.location = "/";
+              window.location = "/";
           }
         } catch (error) {
           this.alert_errors = error.response.data.errors;
@@ -144,5 +147,5 @@ export default {
       }
     },
   },
-};
+}
 </script>
