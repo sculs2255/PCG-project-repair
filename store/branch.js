@@ -33,34 +33,34 @@ export const actions = {
         }).join('&');
 
         console.log(queryString);
-        queryString ='';
 
-        const url = routeAPI.case.main + "?" + queryString;
+        const url = routeAPI.branch.main + "?" + queryString;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$get(url, config);
         commit('resData', res)
     },
-    async getInfo({ commit }, { code }) {
-        const url = routeAPI.case.main + "/" + code;
+    async getInfo({ commit }, { id }) {
+        const url = routeAPI.branch.main + "/" + id;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$get(url, config);
         commit('resInfo', res)
     },
     async create({ commit }, params) {
-        const url = routeAPI.case.main;
+        const url = routeAPI.branch.main;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$post(url, params, config);
         return res;
     },
     async update({ commit }, params) {
-        const url = routeAPI.case.main + "/" + params.code;
+        console.log(params.BranchName+params.BranchID);
+        const url = routeAPI.branch.main + "/" + params.BranchID;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$put(url, params, config);
         return res;
     },
 
     async delete({ commit }, { id }) {
-        const url = routeAPI.case.main + "/" + id;
+        const url = routeAPI.branch.main + "/" + id;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$delete(url, config);
         return res;
