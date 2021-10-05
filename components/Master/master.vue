@@ -29,7 +29,7 @@
           {{ item.status }}
         </v-chip>
       </template>
-      <template #[`item.icon`]>
+      <template #[`item.icon`]="">
         <v-dialog v-model="adialog" width="700">
           <template v-slot:activator="{ on, attrs }">
             <v-btn

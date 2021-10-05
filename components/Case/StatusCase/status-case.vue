@@ -17,11 +17,11 @@
       :items="caseList.data"
       :options.sync="optionDataTables"
       :server-items-length="caseList.totalItems"
+      :items-per-page="filter.pageSize"
       sort-by="id"
       class="datatable-listing-app"
       fixed-header
       height="550px"
-      :items-per-page="-1"
       hide-default-footer
     >
       <template #[`item.priorityID`]="{ item }">
@@ -29,18 +29,9 @@
           {{ getPName(item.priorityID) }}
         </v-chip>
       </template>
-      <template #[`item.status`]="{ item }">
-        <v-chip :color="getSColor(item.status)" dark>
-          {{ getSName(item.status) }}
-        </v-chip>
-      </template>
-      <template #[`item.button`]>
-        <v-btn
-          small
-          elevation="3"
-          color="info"
-          to="/Repair-Case/repair-case-page"
-        >
+
+      <template #[`item.button`]="{ item }">
+        <v-btn small elevation="3" color="info" @click="CheckDetail(item)">
           <v-icon>mdi-card-search-outline</v-icon>
         </v-btn>
       </template>
@@ -56,7 +47,7 @@ export default {
     return {
       filter: {
         textSearch: "",
-        pageSize: 10,
+        pageSize: 1000,
         pageNumber: 0,
         caseTypeID: 0
       },
@@ -87,7 +78,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      caseList: "case/list"
+      caseList: "case/list",
+      edit_info: "case/info"
     })
   },
   watch: {
@@ -100,7 +92,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      getDataList: "case/getDataList"
+      getDataList: "case/getDataList",
+      getInfoEdit: "case/getInfo"
     }),
     async _getDataList() {
       const { page, itemsPerPage, sortBy, sortDesc } = this.optionDataTables;
@@ -113,6 +106,11 @@ export default {
       this.loading_dts = true;
       await this.getDataList(this.filter);
       this.loading_dts = false;
+    },
+    async CheckDetail(item) {
+      console.log(item);
+      console.log(item.caseID);
+      await this.$router.push(`/Repair-Case/repair-case-page/id=${item.caseID}`);
     },
     getPColor(priorityID) {
       if (priorityID === 1) return "error";

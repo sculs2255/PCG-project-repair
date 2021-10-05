@@ -33,7 +33,7 @@ export const actions = {
         }).join('&');
 
         console.log(queryString);
-        queryString ='';
+
 
         const url = routeAPI.status.main + "?" + queryString;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }

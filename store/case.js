@@ -33,15 +33,15 @@ export const actions = {
         }).join('&');
 
         console.log(queryString);
-        queryString ='';
+
 
         const url = routeAPI.case.main + "?" + queryString;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$get(url, config);
         commit('resData', res)
     },
-    async getInfo({ commit }, { code }) {
-        const url = routeAPI.case.main + "/" + code;
+    async getInfo({ commit }, { id }) {
+        const url = routeAPI.case.main + "/" + id;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$get(url, config);
         commit('resInfo', res)
