@@ -5,7 +5,7 @@
       flat
       hide-no-data
       hide-details
-      label="Select Module"
+      label="Select Department"
       solo-inverted
       class="ma-2 rounded-pill"
       style="width:40%"
@@ -15,20 +15,19 @@
       ref="form"
       :loading="loading_dts"
       :headers="headers"
-      :items="moduleList.data"
+      :items="departmentList.data"
       :options.sync="optionDataTables"
-      :server-items-length="moduleList.totalItems"
-      sort-by="id"
+      :server-items-length="departmentList.totalItems"
       :items-per-page="filter.pageSize"
+      sort-by="id"
       class="datatable-listing-app"
       fixed-header
       height="550px"
-
       hide-default-footer
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title>Module</v-toolbar-title>
+          <v-toolbar-title>Department</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
@@ -39,38 +38,34 @@
             </template>
             <v-card>
               <v-card-title>
-                <span class="headline">Module</span>
+                <span class="headline">Department</span>
               </v-card-title>
               <v-card-text>
                 <v-container>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="form.ModuleID"
-                        label="IdModule "
+                        v-model="form.DepartmentID"
+                        label="Iddepartment "
                         required
 
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="form.ModuleCode"
-                        label="Module"
+                        v-model="form.DepartmentName"
+                        label="Department"
                         required
                       ></v-text-field>
-
-
                     </v-col>
-                      <v-col cols="12" sm="6" md="4">
+
+                    <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="form.SystemID"
-                        label="Module"
+                        v-model="form.BranchID"
+                        label="BranchID"
                         required
                       ></v-text-field>
-
                     </v-col>
-
-
                   </v-row>
                 </v-container>
               </v-card-text>
@@ -105,24 +100,25 @@ export default {
     return {
       dialog: false,
       form: {
-        ModuleID: '',
-        ModuleCode: "",
-        SystemID:''
+        DepartmentID: '',
+         DepartmentName: "",
+         BranchID :''
       },
       filter: {
         textSearch: "",
         pageSize: 10,
         pageNumber: 0,
-        moduleID: 0
+        DepartmentID: 0,
+
       },
       optionDataTables: {},
       loading_dts: false,
       headers: [
-        { text: "module ID", value: "moduleID", filterable: false },
-        { text: "module Code", value: "moduleCode", filterable: false },
-        { text: "SystemID", value: "systemID", filterable: false },
+        { text: "Department ID", value: "departmentID", filterable: false },
+        { text: "Department Name", value: "departmentName", filterable: false },
+        { text: "Branch ID", value: "branchID", filterable: false },
         {
-          text: "Details / Cancel priority",
+          text: "Details / Cancel department",
           value: "actions",
           filterable: false,
           sortable: false
@@ -132,8 +128,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      moduleList: "module/list",
-      edit_info: "module/info"
+      departmentList: "department/list",
+      edit_info: "department/info"
     })
   },
   watch: {
@@ -146,8 +142,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      getDataList: "module/getDataList",
-      getInfoEdit: "module/getInfo"
+      getDataList: "department/getDataList",
+      getInfoEdit: "department/getInfo"
     }),
     async _getDataList() {
       const { page, itemsPerPage, sortBy, sortDesc } = this.optionDataTables;
@@ -164,15 +160,16 @@ export default {
 
     async edit(item) {
       this.action_form = "Edit";
-      await this.getInfoEdit({ id: item.moduleID });
-      this.form.ModuleID = this.edit_info.data.ModuleID;
-      this.form.ModuleCode = this.edit_info.data.ModuleCode;
+      await this.getInfoEdit({ id: item.departmentID });
+      this.form.departmentID = this.edit_info.data.departmentID;
+      this.form.departmentName = this.edit_info.data.departmentName;
+      this.form.branchID = this.edit_info.data.branchID;
       this.dialog = true;
     },
     async submit() {
       if (this.action_form == "Edit") {
         await this.$store
-          .dispatch("module/update", this.form)
+          .dispatch("department/update", this.form)
           .then(response => {
             console.log(response);
 
@@ -182,7 +179,7 @@ export default {
           });
       } else {
         await this.$store
-          .dispatch("module/create", this.form)
+          .dispatch("department/create", this.form)
           .then(response => {
             console.log(response);
           })
@@ -196,7 +193,7 @@ export default {
     async deleteData(item) {
       console.log(item);
       await this.$store
-        .dispatch("module/delete", { id: item.moduleID })
+        .dispatch("department/delete", { id: item.departmentID })
         .then(response => {
           this._getDataList();
           console.log(response);

@@ -5,30 +5,29 @@
       flat
       hide-no-data
       hide-details
-      label="Select Module"
+      label="Select User"
       solo-inverted
       class="ma-2 rounded-pill"
       style="width:40%"
     ></v-autocomplete>
-
+{{userList}}
     <v-data-table
       ref="form"
       :loading="loading_dts"
       :headers="headers"
-      :items="moduleList.data"
+      :items="userList.data"
       :options.sync="optionDataTables"
-      :server-items-length="moduleList.totalItems"
+      :server-items-length="userList.totalItems"
       sort-by="id"
-      :items-per-page="filter.pageSize"
       class="datatable-listing-app"
       fixed-header
       height="550px"
-
+      :items-per-page="filter.pageSize"
       hide-default-footer
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title>Module</v-toolbar-title>
+          <v-toolbar-title>User</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
@@ -39,38 +38,54 @@
             </template>
             <v-card>
               <v-card-title>
-                <span class="headline">Module</span>
+                <span class="headline">User</span>
               </v-card-title>
               <v-card-text>
                 <v-container>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="form.ModuleID"
-                        label="IdModule "
+                        v-model="form.id"
+                        label="IdUser "
                         required
 
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="form.ModuleCode"
-                        label="Module"
+                        v-model="form.firstName"
+                        label="firstName"
                         required
                       ></v-text-field>
-
-
                     </v-col>
-                      <v-col cols="12" sm="6" md="4">
+                    <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="form.SystemID"
-                        label="Module"
+                        v-model="form.lastName"
+                        label="firstName"
                         required
                       ></v-text-field>
-
                     </v-col>
-
-
+                     <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="form.email"
+                        label="Email"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="form.userName"
+                        label="userName"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                     <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="form.phoneNumber"
+                        label="phoneNumber"
+                        required
+                      ></v-text-field>
+                    </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
@@ -92,6 +107,8 @@
         <v-icon @click="deleteData(item)">
           mdi-delete
         </v-icon>
+
+
       </template>
     </v-data-table>
   </v-card>
@@ -105,24 +122,28 @@ export default {
     return {
       dialog: false,
       form: {
-        ModuleID: '',
-        ModuleCode: "",
-        SystemID:''
+        id: "",
+        firstName:"",
+        lastName: "",
+        phoneNumber:""
       },
       filter: {
         textSearch: "",
         pageSize: 10,
         pageNumber: 0,
-        moduleID: 0
+        ID: 0
       },
       optionDataTables: {},
       loading_dts: false,
       headers: [
-        { text: "module ID", value: "moduleID", filterable: false },
-        { text: "module Code", value: "moduleCode", filterable: false },
-        { text: "SystemID", value: "systemID", filterable: false },
+        { text: "user ID", value: "id", filterable: false },
+        { text: "fristName", value: "firstName", filterable: false },
+        { text: "LastName", value: "lastName", filterable: false },
+        { text: "Email", value: "email", filterable: false },
+        { text: "Phone", value: "phoneNumber", filterable: false },
+
         {
-          text: "Details / Cancel priority",
+          text: "Details / Cancel active",
           value: "actions",
           filterable: false,
           sortable: false
@@ -132,8 +153,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      moduleList: "module/list",
-      edit_info: "module/info"
+      userList: "user/list",
+      edit_info: "user/info"
     })
   },
   watch: {
@@ -146,8 +167,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      getDataList: "module/getDataList",
-      getInfoEdit: "module/getInfo"
+      getDataList: "user/getDataList",
+      getInfoEdit: "user/getInfo"
     }),
     async _getDataList() {
       const { page, itemsPerPage, sortBy, sortDesc } = this.optionDataTables;
@@ -164,15 +185,16 @@ export default {
 
     async edit(item) {
       this.action_form = "Edit";
-      await this.getInfoEdit({ id: item.moduleID });
-      this.form.ModuleID = this.edit_info.data.ModuleID;
-      this.form.ModuleCode = this.edit_info.data.ModuleCode;
+      await this.getInfoEdit({ id: item.id });
+      this.form.firstName = this.edit_info.data.firstName;
+      this.form.lastName = this.edit_info.data.lastName;
+      this.form.phoneNumber = this.edit_info.data.phoneNumber;
       this.dialog = true;
     },
     async submit() {
       if (this.action_form == "Edit") {
         await this.$store
-          .dispatch("module/update", this.form)
+          .dispatch("user/update", this.form)
           .then(response => {
             console.log(response);
 
@@ -182,7 +204,7 @@ export default {
           });
       } else {
         await this.$store
-          .dispatch("module/create", this.form)
+          .dispatch("user/create", this.form)
           .then(response => {
             console.log(response);
           })
@@ -196,7 +218,7 @@ export default {
     async deleteData(item) {
       console.log(item);
       await this.$store
-        .dispatch("module/delete", { id: item.moduleID })
+        .dispatch("user/delete", { id: item.id })
         .then(response => {
           this._getDataList();
           console.log(response);

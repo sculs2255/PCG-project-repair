@@ -21,7 +21,43 @@ export default {
   status: {
     main: url + "/Status"
   },
+<<<<<<< HEAD
   incidentCase: {
     main: url + "/IncidentCase"
   }
 };
+=======
+
+  priority: {
+    main: url + '/Priority',
+  },
+
+  country: {
+    main: url + '/Country',
+  },
+
+  branch: {
+    main: url + '/Branch',
+  },
+
+  module: {
+    main: url + '/Module',
+  },
+  
+  hdsystem: {
+    main: url + '/HDSystem',
+  },
+
+  department: {
+    main: url + '/Department',
+  },
+
+  workplace: {
+    main: url + '/Workplace',
+  },
+
+
+
+
+}
+>>>>>>> Boat028

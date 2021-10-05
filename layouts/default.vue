@@ -50,9 +50,9 @@ export default {
       fixed: false,
       items: [
         {
-          title: "Personnel",
-          to: "/Master-page/Id_master",
-          component: "master"
+          title: "User",
+          to: "/Master-page/Id_user",
+          
         },
         {
           title: "Branch",
@@ -71,12 +71,21 @@ export default {
           to: "/Master-page/Id_priotry"
         },
         {
+          title: "Department",
+          to: "/Master-page/Id_department"
+        },
+        {
           title: "System",
           to: "/Master-page/Id_system"
         },
+
         {
           title: "Module",
           to: "/Master-page/Id_module"
+        },
+        {
+          title: "Workplace",
+          to: "/Master-page/Id_workplace"
         }
       ],
       title: "Help Desk IT Support"

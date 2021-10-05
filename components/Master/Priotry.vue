@@ -1,211 +1,199 @@
 <template>
   <v-card class="pa-2 rounded-lg elevation-4">
     <v-autocomplete
-      v-model="select"
-      :loading="loading"
-      :items="items"
-      :search-input.sync="search"
       cache-items
       flat
       hide-no-data
       hide-details
-      label="Priority"
+      label="Select Priority"
       solo-inverted
       class="ma-2 rounded-pill"
       style="width:40%"
     ></v-autocomplete>
 
     <v-data-table
+      ref="form"
+      :loading="loading_dts"
+      :headers="headers"
+      :items="priorityList.data"
+      :options.sync="optionDataTables"
+      :server-items-length="priorityList.totalItems"
+      :items-per-page="filter.pageSize"
+      sort-by="id"
+      class="datatable-listing-app"
       fixed-header
       height="550px"
-      :search="select"
-      :headers="headers"
-      :items="caseList"
-      :items-per-page="-1"
       hide-default-footer
     >
-      <template #[`item.priority`]="{ item }">
-        <v-chip :color="getColor(item.priority)" dark>
-          {{ item.priority }}
-        </v-chip>
-      </template>
-      <template #[`item.status`]="{ item }">
-        <v-chip :color="getSColor(item.status)" dark>
-          {{ item.status }}
-        </v-chip>
-      </template>
-      <template #[`item.icon`]="">
-         <v-dialog
-      v-model="adialog"
-      width="300"
-    >
-      <template v-slot:activator="{ on, attrs }">
-
-       <v-btn
-          class="ma-0"
-          color="green"
-          dark
-          v-bind="attrs"
-          v-on="on"
-          x-small
-          elevation="3"
-        >
-          <v-icon>mdi-wrench</v-icon>
-
-        </v-btn>
-      </template>
-
-       <v-card>
-        <v-card-title>
-          <span class="text-h5">Edit Priorty</span>
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-                <v-col
-                cols="12"
+      <template v-slot:top>
+        <v-toolbar flat color="white">
+          <v-toolbar-title>Priority</v-toolbar-title>
+          <v-divider class="mx-4" inset vertical></v-divider>
+          <v-spacer></v-spacer>
+          <v-dialog v-model="dialog" max-width="500px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
+                >New Item</v-btn
               >
-                <v-text-field
-                  label="Edit Priorty*"
-                  required
-                ></v-text-field>
-              </v-col>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">Priority</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="form.PriorityID"
+                        label="IdPriority "
+                        required
 
-            </v-row>
-          </v-container>
-          <small>*indicates required field</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="adialog = false"
-          >
-            Close
-          </v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="adialog = false"
-          >
-            Save
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+                      ></v-text-field>
+                    </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="form.PriorityName"
+                        label="Priority"
+                        required
+                      ></v-text-field>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
 
-    </v-dialog>
-        <v-dialog
-      v-model="bdialog"
-      width="500"
-    >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
-          color="red "
-          dark
-          v-bind="attrs"
-          v-on="on"
-          x-small
-          elevation="3"
-        >
-            <v-icon> mdi-cancel</v-icon>
-        </v-btn>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" @click="cancel" text>Cancel</v-btn>
+                <v-btn color="blue darken-1" @click="submit" text>Save</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-toolbar>
       </template>
 
-      <v-card>
-        <v-card-title class="text-h4 red" color="red">
-
-          Do you want to delete?
-
-        </v-card-title>
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="green"
-            text
-            @click="bdialog = false"
-          >
-            I accept
-          </v-btn>
-          <v-btn
-            color="red"
-            text
-            @click="bdialog = false"
-          >
-            Cancel
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+      <template v-slot:[`item.actions`]="{ item }">
+        <v-icon class="mr-2" @click="edit(item)">
+          mdi-pencil
+        </v-icon>
+        <v-icon @click="deleteData(item)">
+          mdi-delete
+        </v-icon>
       </template>
-
     </v-data-table>
   </v-card>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   data() {
     return {
-
+      dialog: false,
+      form: {
+        PriorityID: '',
+        PriorityName: ""
+      },
+      filter: {
+        textSearch: "",
+        pageSize: 10,
+        pageNumber: 0,
+        PriorityID: 0,
+      },
+      optionDataTables: {},
+      loading_dts: false,
       headers: [
-        { text: "Description", value: "description" },
-        { text: "Priority", value: "priority" },
-        { text: "", value: "descri" },
-        { text: "", value: "descri" },
-        { text: "", value: "descri" },
-        { text: "", value: "descri" },
-        { text: "Action", value: "icon" },
-
-      ],
-      caseList: [
+        { text: "priority ID", value: "priorityID", filterable: false },
+        { text: "priority Name", value: "priorityName", filterable: false },
         {
-          description:"Medium",
-          priority: 2,
-
-        },
-        {
-          description:"Low",
-          priority: 3,
-
-        },
-        {
-         description:"High",
-          priority: 1,
-
-        },
-
+          text: "Details / Cancel priority",
+          value: "actions",
+          filterable: false,
+          sortable: false
+        }
       ]
     };
   },
+  computed: {
+    ...mapGetters({
+      priorityList: "priority/list",
+      edit_info: "priority/info"
+    })
+  },
   watch: {
-    search(val) {
-      val && val !== this.select && this.querySelections(val);
-    }
+    optionDataTables: {
+      handler() {
+        this._getDataList();
+      }
+    },
+    deep: true
   },
   methods: {
-    getColor(priority) {
-      if (priority == 1) return "error";
-      else if (priority == 2) return "warning";
-      else return "info";
+    ...mapActions({
+      getDataList: "priority/getDataList",
+      getInfoEdit: "priority/getInfo"
+    }),
+    async _getDataList() {
+      const { page, itemsPerPage, sortBy, sortDesc } = this.optionDataTables;
+      this.filter.sortOrder = sortBy;
+      if (sortDesc == "true") {
+        this.filter.sortOrder = sortBy + "_desc";
+      }
+      this.filter.pageSize = itemsPerPage;
+      this.filter.pageNumber = page;
+      this.loading_dts = true;
+      await this.getDataList(this.filter);
+      this.loading_dts = false;
     },
-    getSColor(status) {
-      if (status == 1) return "grey";
-      else if (status == 2) return "blue lighten-1";
-      else if (status == 3) return "error";
-      else return "success";
+
+    async edit(item) {
+      this.action_form = "Edit";
+      await this.getInfoEdit({ id: item.priorityID });
+      this.form.PriorityID = this.edit_info.data.priorityID;
+      this.form.PriorityName = this.edit_info.data.priorityName;
+      this.dialog = true;
     },
-    querySelections(v) {
-      this.loading = true;
-      // Simulated ajax query
-      setTimeout(() => {
-        this.items = this.caseList.filter(e => {
-          return (e || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1;
+    async submit() {
+      if (this.action_form == "Edit") {
+        await this.$store
+          .dispatch("priority/update", this.form)
+          .then(response => {
+            console.log(response);
+
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      } else {
+        await this.$store
+          .dispatch("priority/create", this.form)
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
+      this._getDataList();
+      this.dialog = false;
+    },
+    async deleteData(item) {
+      console.log(item);
+      await this.$store
+        .dispatch("priority/delete", { id: item.priorityID })
+        .then(response => {
+          this._getDataList();
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
         });
-        this.loading = false;
-      }, 500);
+    },
+    cancel() {
+      this.dialog = false;
     }
-  }
+  },
+  async fetch() {}
 };
 </script>
