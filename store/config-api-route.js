@@ -21,43 +21,34 @@ export default {
   status: {
     main: url + "/Status"
   },
-<<<<<<< HEAD
   incidentCase: {
     main: url + "/IncidentCase"
-  }
-};
-=======
-
+  },
   priority: {
-    main: url + '/Priority',
+    main: url + "/Priority"
   },
 
   country: {
-    main: url + '/Country',
+    main: url + "/Country"
   },
 
   branch: {
-    main: url + '/Branch',
+    main: url + "/Branch"
   },
 
   module: {
-    main: url + '/Module',
+    main: url + "/Module"
   },
-  
+
   hdsystem: {
-    main: url + '/HDSystem',
+    main: url + "/HDSystem"
   },
 
   department: {
-    main: url + '/Department',
+    main: url + "/Department"
   },
 
   workplace: {
-    main: url + '/Workplace',
-  },
-
-
-
-
-}
->>>>>>> Boat028
+    main: url + "/Workplace"
+  }
+};

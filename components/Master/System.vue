@@ -1,13 +1,6 @@
 <template>
   <v-card class="pa-2 rounded-lg elevation-4">
     <v-autocomplete
-<<<<<<< HEAD
-      v-model="select"
-      :loading="loading"
-      :items="items"
-      :search-input.sync="search"
-=======
->>>>>>> Boat028
       cache-items
       flat
       hide-no-data
@@ -30,85 +23,6 @@
       class="datatable-listing-app"
       fixed-header
       height="550px"
-<<<<<<< HEAD
-      :search="select"
-      :headers="headers"
-      :items="caseList"
-      :items-per-page="-1"
-      hide-default-footer
-    >
-      <template #[`item.icon`]="">
-        <v-dialog v-model="adialog" width="500">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              class="ma-0"
-              color="green"
-              dark
-              v-bind="attrs"
-              v-on="on"
-              x-small
-              elevation="3"
-            >
-              <v-icon>mdi-wrench</v-icon>
-            </v-btn>
-          </template>
-
-          <v-card>
-            <v-card-title>
-              <span class="text-h5">Edit System</span>
-            </v-card-title>
-            <v-card-text>
-              <v-container>
-                <v-row>
-                  <v-col cols="12">
-                    <v-text-field label="Edit System*" required></v-text-field>
-                  </v-col>
-                </v-row>
-              </v-container>
-              <small>*indicates required field</small>
-            </v-card-text>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="red" text @click="adialog = false">
-                Close
-              </v-btn>
-              <v-btn color="green" text @click="adialog = false">
-                Save
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-        <v-dialog v-model="bdialog" width="500">
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
-              color="red "
-              dark
-              v-bind="attrs"
-              v-on="on"
-              x-small
-              elevation="3"
-            >
-              <v-icon> mdi-cancel</v-icon>
-            </v-btn>
-          </template>
-
-          <v-card>
-            <v-card-title class="text-h4 red" color="red">
-              Do you want to delete?
-            </v-card-title>
-
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn color="green" text @click="bdialog = false">
-                I accept
-              </v-btn>
-              <v-btn color="red" text @click="bdialog = false">
-                Cancel
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
-=======
 
       hide-default-footer
     >
@@ -166,7 +80,6 @@
         <v-icon @click="deleteData(item)">
           mdi-delete
         </v-icon>
->>>>>>> Boat028
       </template>
     </v-data-table>
   </v-card>
@@ -178,33 +91,6 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-<<<<<<< HEAD
-      headers: [
-        { text: "System", value: "system" },
-        { text: "Module", value: "module" },
-        { text: "", value: "branch" },
-        { text: "", value: "descri" },
-        { text: "", value: "descri" },
-        { text: "", value: "descri" },
-        { text: "Action", value: "icon" }
-      ],
-      caseList: [
-        {
-          system: "System1",
-          module: "Module1"
-        },
-        {
-          system: "System2",
-          module: "Module2"
-        },
-        {
-          system: "System3",
-          module: "Module3"
-        },
-        {
-          system: "System4",
-          module: "Module4"
-=======
       dialog: false,
       form: {
         SystemID: '',
@@ -226,7 +112,6 @@ export default {
           value: "actions",
           filterable: false,
           sortable: false
->>>>>>> Boat028
         }
       ]
     };
@@ -246,12 +131,6 @@ export default {
     deep: true
   },
   methods: {
-<<<<<<< HEAD
-    getSColor(status) {
-      if (status == "User") return "grey";
-      else if (status == "It") return "blue lighten-1";
-      else return "success";
-=======
     ...mapActions({
       getDataList: "hdsystem/getDataList",
       getInfoEdit: "hdsystem/getInfo"
@@ -299,7 +178,6 @@ export default {
       }
       this._getDataList();
       this.dialog = false;
->>>>>>> Boat028
     },
     async deleteData(item) {
       console.log(item);

@@ -21,14 +21,9 @@
       :items-per-page="filter.pageSize"
       hide-default-footer
       sort-by="id"
-      :items-per-page="filter.pageSize"
       class="datatable-listing-app"
       fixed-header
       height="550px"
-<<<<<<< HEAD
-=======
-      hide-default-footer
->>>>>>> Boat028
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
@@ -53,10 +48,6 @@
                         v-model="form.StatusID"
                         label="IdStatus "
                         required
-<<<<<<< HEAD
-=======
-
->>>>>>> Boat028
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
@@ -156,10 +147,6 @@ export default {
       await this.getDataList(this.filter);
       this.loading_dts = false;
     },
-<<<<<<< HEAD
-=======
-
->>>>>>> Boat028
     async edit(item) {
       this.action_form = "Edit";
       await this.getInfoEdit({ id: item.statusID });
@@ -173,10 +160,6 @@ export default {
           .dispatch("status/update", this.form)
           .then(response => {
             console.log(response);
-<<<<<<< HEAD
-=======
-
->>>>>>> Boat028
           })
           .catch(error => {
             console.log(error);
