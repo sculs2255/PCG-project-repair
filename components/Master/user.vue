@@ -10,7 +10,7 @@
       class="ma-2 rounded-pill"
       style="width:40%"
     ></v-autocomplete>
-{{userList}}
+
     <v-data-table
       ref="form"
       :loading="loading_dts"
@@ -30,7 +30,7 @@
           <v-toolbar-title>User</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
-          <v-dialog v-model="dialog" max-width="500px">
+          <v-dialog v-model="ndialog" max-width="500px">
             <template v-slot:activator="{ on, attrs }">
               <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
                 >New Item</v-btn
@@ -108,7 +108,124 @@
           mdi-delete
         </v-icon>
 
+         <v-dialog v-model="dialog" max-width="700px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
+                >Workplace</v-btn>
+            </template>
+            <v-card>
+              <v-card-title>
+                <span class="headline">User ID :{{$auth.user.user.id}}</span>
+                 <span class="headline">Name :{{$auth.user.user.firstName}}</span>
+              </v-card-title>
+              <v-card-text>
+                <span class="headline">WorkPlace :_________________________</span>
+                 <v-dialog v-model="wdialog" max-width="500px">
+            <template v-slot:activator="{ on, attrs }">
+              <v-btn color="primary" dark class="mb-2" v-bind="attrs" v-on="on"
+                >Add WorkPlace</v-btn
+              >
+            </template>
+            <v-card>
+              <v-card-title class="center">
+                <span class="headline">ADD Workplace</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  Country :
+                  <v-row>
+                    <v-col cols="12" sm="6" md="8">
 
+                       <v-combobox
+                       v-model="select"
+                      :items="items"
+                       label="Country"
+                       multiple
+                       outlined
+                        dense
+                       ></v-combobox>
+                    </v-col>
+                     <v-col cols="12" sm="6" md="8">
+                       Branch :
+                       <v-combobox
+                      v-model="select"
+                      :items="items"
+                      label="Branch"
+                      multiple
+                      outlined
+                      dense
+                       ></v-combobox>
+                    </v-col>
+                     <v-col cols="12" sm="6" md="8">
+                       Department :
+                      <v-combobox
+                      v-model="select"
+                      :items="items"
+                      label="Department"
+                      multiple
+                      outlined
+                      dense
+                    ></v-combobox>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" @click="cancel1" text>Cancel</v-btn>
+                <v-btn color="blue darken-1" @click="submit" text>Save</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+
+                <v-container>
+              <v-row align="center">
+        <v-checkbox
+          v-model="denabled"
+          hide-details
+          class="shrink mr-2 mt-0"
+        ></v-checkbox>
+        <v-text-field
+          :disabled="enabled"
+          label="Thailland /Silom /MNG"
+        ></v-text-field>
+
+      </v-row>
+       <v-row align="center">
+        <v-checkbox
+          v-model="includeFiles"
+          hide-details
+          class="shrink mr-2 mt-0"
+        ></v-checkbox>
+        <v-text-field
+          :disabled="enabled"
+          label="Sigapore / Granden By The bay / It"
+        ></v-text-field>
+
+      </v-row>
+      <v-row align="center">
+        <v-checkbox
+          v-model="enabled"
+          hide-details
+          class="shrink mr-2 mt-0"
+        ></v-checkbox>
+        <v-text-field
+          :disabled="enabled"
+          label="China / China Tower / Accounting"
+        ></v-text-field>
+
+      </v-row>
+                </v-container>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="blue darken-1" @click="cancel" text>Cancel</v-btn>
+                <v-btn color="blue darken-1" @click="submit" text>Save</v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
       </template>
     </v-data-table>
   </v-card>
@@ -120,7 +237,11 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
+      includeFiles: false,
+      enabled: false,
       dialog: false,
+      wialog: false,
+      nialog: false,
       form: {
         id: "",
         firstName:"",
@@ -185,7 +306,7 @@ export default {
 
     async edit(item) {
       this.action_form = "Edit";
-      await this.getInfoEdit({ id: item.id });
+      await this.getInfoEdit({ id: item.UserID });
       this.form.firstName = this.edit_info.data.firstName;
       this.form.lastName = this.edit_info.data.lastName;
       this.form.phoneNumber = this.edit_info.data.phoneNumber;
@@ -229,8 +350,12 @@ export default {
     },
     cancel() {
       this.dialog = false;
+    },
+    cancel1() {
+      this.dialog = false;
     }
   },
+
   async fetch() {}
 };
 </script>

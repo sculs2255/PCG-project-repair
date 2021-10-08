@@ -60,22 +60,8 @@
 
                       ></v-text-field>
                     </v-col>
-                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="form.CountryID"
-                        label="IdCountry "
-                        required
 
-                      ></v-text-field>
-                    </v-col>
-                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="form.BranchID"
-                        label="IdBranch "
-                        required
 
-                      ></v-text-field>
-                    </v-col>
 
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
@@ -134,8 +120,7 @@ export default {
       headers: [
         { text: "workplace ID", value: "workplaceID", filterable: false },
         { text: "user ID", value: "userID", filterable: false },
-        { text: "branch Id", value: "branchID", filterable: false },
-        { text: "country ID", value: "countryID", filterable: false },
+        
         { text: "depaerment ID", value: "departmentID", filterable: false },
         {
           text: "Details / Cancel Workplace",

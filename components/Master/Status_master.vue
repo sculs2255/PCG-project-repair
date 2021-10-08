@@ -80,6 +80,9 @@
         <v-icon @click="deleteData(item)">
           mdi-delete
         </v-icon>
+         <v-icon class="mr-2" @click="edit(item)">
+          mdi-pencil
+        </v-icon>
       </template>
     </v-data-table>
   </v-card>
