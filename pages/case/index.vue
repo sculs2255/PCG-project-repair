@@ -31,7 +31,12 @@
       </template>
 
       <template #[`item.button`]="{ item }">
-        <v-btn small elevation="3" color="info"  @click="ClickDetail(item.caseID,item.caseTypeID)">
+        <v-btn
+          small
+          elevation="3"
+          color="info"
+          @click="ClickDetail(item.caseID, item.caseTypeID)"
+        >
           <v-icon>mdi-card-search-outline</v-icon>
         </v-btn>
       </template>
@@ -63,8 +68,8 @@ export default {
           filterable: false,
           sortable: false
         },
-        { text: "Informer", value: "informer", filterable: false },
-        { text: "Receiver", value: "receiver", filterable: false },
+        { text: "Informer", value: "firstName", filterable: false },
+        { text: "Receiver", value: "reUserID", filterable: false },
         { text: "Priority", value: "priorityID", filterable: false },
         { text: "Status", value: "statusID", filterable: false },
         {
@@ -78,8 +83,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      caseList: "case/list",
-      edit_info: "case/info"
+      caseList: "case/list"
     })
   },
   watch: {
@@ -92,8 +96,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getDataList: "case/getDataList",
-      getInfoEdit: "case/getInfo"
+      getDataList: "case/getDataList"
     }),
     async _getDataList() {
       const { page, itemsPerPage, sortBy, sortDesc } = this.optionDataTables;
@@ -107,15 +110,15 @@ export default {
       await this.getDataList(this.filter);
       this.loading_dts = false;
     },
-     ClickDetail(caseID,caseTypeID) {
+    ClickDetail(caseID, caseTypeID) {
       this.$router.push({
-
-        path: '/case/'+caseID,
+        path: "/case/" + caseID,
         params: {
-          detail: caseID
-        },query: {
-          type: caseTypeID,
+          detail: caseID,
         },
+        query: {
+          type: caseTypeID
+        }
       });
     },
     getPColor(priorityID) {

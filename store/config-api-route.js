@@ -47,6 +47,12 @@ export default {
   department: {
     main: url + "/Department"
   },
+  receiver: {
+    main: url + "/Receiver"
+  },
+  informer: {
+    main: url + "/Informer"
+  },
 
   workplace: {
     main: url + "/Workplace"
