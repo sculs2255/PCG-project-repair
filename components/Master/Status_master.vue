@@ -18,12 +18,12 @@
       :items="statusList.data"
       :options.sync="optionDataTables"
       :server-items-length="statusList.totalItems"
-      sort-by="id"
       :items-per-page="filter.pageSize"
+      hide-default-footer
+      sort-by="id"
       class="datatable-listing-app"
       fixed-header
       height="550px"
-      hide-default-footer
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
@@ -48,7 +48,6 @@
                         v-model="form.StatusID"
                         label="IdStatus "
                         required
-
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">
@@ -96,14 +95,14 @@ export default {
     return {
       dialog: false,
       form: {
-        StatusID: '',
+        StatusID: "",
         StatusName: ""
       },
       filter: {
         textSearch: "",
-        pageSize: 10,
+        pageSize: 1000,
         pageNumber: 0,
-        statusTypeID: 0
+        statusID: 0
       },
       optionDataTables: {},
       loading_dts: false,
@@ -145,12 +144,12 @@ export default {
         this.filter.sortOrder = sortBy + "_desc";
       }
       this.filter.pageSize = itemsPerPage;
+      console.log(itemsPerPage);
       this.filter.pageNumber = page;
       this.loading_dts = true;
       await this.getDataList(this.filter);
       this.loading_dts = false;
     },
-
     async edit(item) {
       this.action_form = "Edit";
       await this.getInfoEdit({ id: item.statusID });
@@ -164,7 +163,6 @@ export default {
           .dispatch("status/update", this.form)
           .then(response => {
             console.log(response);
-
           })
           .catch(error => {
             console.log(error);
@@ -198,6 +196,16 @@ export default {
       this.dialog = false;
     }
   },
-  async fetch() {}
+  async fetch() {},
+  getPColor(priorityID) {
+    if (priorityID === 1) return "error";
+    else if (priorityID === 2) return "warning";
+    else if (priorityID === 3) return "info";
+  },
+  getPName(priorityID) {
+    if (priorityID === 1) return "High";
+    else if (priorityID === 2) return "Medium";
+    else if (priorityID === 3) return "Low";
+  }
 };
 </script>
