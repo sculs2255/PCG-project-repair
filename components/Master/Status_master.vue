@@ -48,6 +48,7 @@
                         v-model="form.StatusID"
                         label="IdStatus "
                         required
+                        disabled
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="4">

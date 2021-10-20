@@ -5,8 +5,8 @@
       <v-spacer></v-spacer>
       <v-tabs align-with-title color="white" dark>
         <v-spacer></v-spacer>
-        <v-tab to="/My-Case/">My case</v-tab>
-        <v-tab to="/Case-page/">Status Case</v-tab>
+        <v-tab to="/">My case</v-tab>
+        <v-tab to="/case">Status Case</v-tab>
         <v-menu offset-y transition="scroll-y-transition">
           <template v-slot:activator="{ on, attrs }">
             <v-tab color="primary" dark v-bind="attrs" v-on="on">Master</v-tab>
@@ -52,7 +52,7 @@ export default {
         {
           title: "User",
           to: "/Master-page/Id_user",
-          
+
         },
         {
           title: "Branch",
