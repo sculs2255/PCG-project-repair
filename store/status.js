@@ -51,6 +51,7 @@ export const actions = {
         return res;
     },
     async update({ commit }, params) {
+      console.log(params);
         console.log(params.StatusName+params.StatusID);
         const url = routeAPI.status.main + "/" + params.StatusID;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }

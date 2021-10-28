@@ -1,10 +1,6 @@
 <template>
   <v-card class="pa-2 rounded-lg elevation-4">
     <v-autocomplete
-      v-model="select"
-      :loading="loading"
-      :items="items"
-      :search-input.sync="search"
       cache-items
       flat
       hide-no-data
@@ -16,30 +12,35 @@
     ></v-autocomplete>
 
     <v-data-table
-      fixed-header
-      height="550px"
-      :search="select"
+      :loading="loading_dts"
       :headers="headers"
-      :items="caseList"
-      :items-per-page="-1"
+      :items="caseList.data"
+      :options.sync="optionDataTables"
+      :server-items-length="caseList.totalItems"
+      :items-per-page="filter.pageSize"
+      sort-by="id"
+      class="datatable-listing-app"
+      fixed-header
+      height="100%"
       hide-default-footer
     >
-      <template #[`item.priority`]="{ item }">
-        <v-chip :color="getPColor(item.priority)" dark>
-          {{ getPName(item.priority) }}
+      <template #[`item.priorityID`]="{ item }">
+        <v-chip :color="getPColor(item.priorityID)" dark>
+          {{ getPName(item.priorityID) }}
         </v-chip>
       </template>
-      <template #[`item.status`]="{ item }">
-        <v-chip :color="getSColor(item.status)" dark>
-          {{ getSName(item.status) }}
+      <template #[`item.statusID`]="{ item }">
+        <v-chip :color="getSColor(item.statusID)" dark>
+          {{ getSName(item.statusID) }}
         </v-chip>
       </template>
-      <template #[`item.button`]>
+
+      <template #[`item.button`]="{ item }">
         <v-btn
           small
           elevation="3"
           color="info"
-          to="/Repair-Case/repair-case-page"
+          @click="ClickDetail(item.caseID, item.caseTypeID)"
         >
           <v-icon>mdi-card-search-outline</v-icon>
         </v-btn>
@@ -49,84 +50,105 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   data() {
     return {
+      filter: {
+        textSearch: "",
+        pageSize: 1000,
+        pageNumber: 0,
+        caseTypeID: 0
+      },
+      optionDataTables: {},
+      loading_dts: false,
       headers: [
-        { text: "ID", value: "id" },
-        { text: "name", value: "name" },
-        { text: "Name Recipent", value: "nameRecipent" },
-        { text: "Topic", value: "topic" },
-        { text: "Priority", value: "priority" },
-        { text: "Status", value: "status" },
-        { text: "IT Recipent", value: "itRecipent" },
-        { text: "Date", value: "dateTime" },
-        { text: "Action", value: "button", filterable: false ,sortable: false }
-      ],
-      caseList: [
+        { text: "Case ID", value: "caseID", filterable: false },
+        { text: "Type", value: "caseTypeID", filterable: false },
+        { text: "Topic", value: "topic", filterable: false },
         {
-          id: "3",
-          name: "Apichai",
-          nameRecipent: "",
-          topic: "Incedent",
-          priority: 1,
-          status: 3,
-          itRecipent: "Supaporn Jaila",
-          dateTime: "15/07/2564 12:30",
-      
+          text: "Submit Date",
+          value: "caseDate",
+          filterable: false,
+          sortable: false
         },
+        { text: "Informer", value: "firstName", filterable: false },
+        { text: "Receiver", value: "reUserID", filterable: false },
+        { text: "Priority", value: "priorityID", filterable: false },
+        { text: "Status", value: "statusID", filterable: false },
         {
-          id: "4",
-          name: "Apichai",
-          nameRecipent: "",
-          topic: "Incedent",
-          priority: 1,
-          status: 4,
-          itRecipent: "Supaporn Jaila",
-          dateTime: "15/07/2564 12:30",
-      
+          text: "Details / Cancel Case",
+          value: "button",
+          filterable: false,
+          sortable: false
         }
       ]
     };
   },
+  computed: {
+    ...mapGetters({
+      caseList: "case/list"
+    })
+  },
   watch: {
-    search(val) {
-      val && val !== this.select && this.querySelections(val);
-    }
+    optionDataTables: {
+      handler() {
+        this._getDataList();
+      }
+    },
+    deep: true
   },
   methods: {
-    getPColor(priority) {
-      if (priority == 1) return "error";
-      else if (priority == 2) return "warning";
-      else return "info";
+    ...mapActions({
+      getDataList: "case/getDataList"
+    }),
+    async _getDataList() {
+      const { page, itemsPerPage, sortBy, sortDesc } = this.optionDataTables;
+      this.filter.sortOrder = sortBy;
+      if (sortDesc == "true") {
+        this.filter.sortOrder = sortBy + "_desc";
+      }
+      this.filter.pageSize = itemsPerPage;
+      this.filter.pageNumber = page;
+      this.loading_dts = true;
+      await this.getDataList(this.filter);
+      this.loading_dts = false;
     },
-    getPName(priority) {
-      if (priority == 1) return "High";
-      else if (priority == 2) return "Medium";
-      else return "Low";
+    ClickDetail(caseID, caseTypeID) {
+      this.$router.push({
+        path: "/case/" + caseID,
+        params: {
+          detail: caseID
+        },
+        query: {
+          type: caseTypeID
+        }
+      });
     },
-    getSColor(status) {
-      if (status == 1) return "grey";
-      else if (status == 2) return "blue lighten-1";
-      else if (status == 3) return "error";
-      else return "success";
+    getPColor(priorityID) {
+      if (priorityID === 1) return "error";
+      else if (priorityID === 2) return "warning";
+      else if (priorityID === 3) return "info";
     },
-    getSName(status) {
-      if (status == 1) return "New Case";
-      else if (status == 2) return "In Progrees";
-      else if (status == 3) return "Cancel";
-      else return "Complete";
+    getPName(priorityID) {
+      if (priorityID === 1) return "High";
+      else if (priorityID === 2) return "Medium";
+      else if (priorityID === 3) return "Low";
     },
-    querySelections(v) {
-      this.loading = true;
-      // Simulated ajax query
-      setTimeout(() => {
-        this.items = this.caseList.filter(e => {
-          return (e || "").toLowerCase().indexOf((v || "").toLowerCase()) > -1;
-        });
-        this.loading = false;
-      }, 500);
+    getSColor(statusID) {
+      if (statusID == 1) return "grey";
+      else if (statusID == 2) return "blue lighten-1";
+      else if (statusID == 3) return "success";
+      else return "error";
+    },
+    getSName(statusID) {
+      if (statusID == 1) return "New Case";
+      else if (statusID == 2) return "In Progrees";
+      else if (statusID == 3) return "Complete";
+      else return "Cancel";
     }
-  }
+  },
+  async fetch() {}
 };
 </script>

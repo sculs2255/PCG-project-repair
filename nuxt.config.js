@@ -126,13 +126,13 @@ export default {
           primary: "#19335A",
           primarys: "#555555",
           accent: "#E91E63",
-          secondary: "#9C27b0",
+          secondary: "#039BE5",
           info: "#00CAE3",
           warning: "#FB8C00",
           error: "#E53935",
-          success: "#4CAF50",
+          success: "#64DD17",
           pcgColor: "#19335A",
-          pri: "#1E88E5"
+          pri: "#00E5FF"
         }
       }
     }

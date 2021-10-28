@@ -21,12 +21,17 @@
       sort-by="id"
       class="datatable-listing-app"
       fixed-header
-      height="550px"
+      height="100%"
       hide-default-footer
     >
       <template #[`item.priorityID`]="{ item }">
         <v-chip :color="getPColor(item.priorityID)" dark>
           {{ getPName(item.priorityID) }}
+        </v-chip>
+      </template>
+      <template #[`item.statusID`]="{ item }">
+        <v-chip :color="getSColor(item.statusID)" dark>
+          {{ getSName(item.statusID) }}
         </v-chip>
       </template>
 
@@ -114,7 +119,7 @@ export default {
       this.$router.push({
         path: "/case/" + caseID,
         params: {
-          detail: caseID,
+          detail: caseID
         },
         query: {
           type: caseTypeID
@@ -130,6 +135,18 @@ export default {
       if (priorityID === 1) return "High";
       else if (priorityID === 2) return "Medium";
       else if (priorityID === 3) return "Low";
+    },
+    getSColor(statusID) {
+      if (statusID == 1) return "grey";
+      else if (statusID == 2) return "blue lighten-1";
+      else if (statusID == 3) return "success";
+      else return "error";
+    },
+    getSName(statusID) {
+      if (statusID == 1) return "New Case";
+      else if (statusID == 2) return "In Progrees";
+      else if (statusID == 3) return "Complete";
+      else return "Cancel";
     }
   },
   async fetch() {}

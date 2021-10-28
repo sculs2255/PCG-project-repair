@@ -48,6 +48,8 @@ export const actions = {
   },
     async update({ commit }, params) {
       console.log(params);
+      console.log(params.id);
+      console.log(params.description);
         const url = routeAPI.receiver.main + "/" + params.id;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$put(url, params, config);

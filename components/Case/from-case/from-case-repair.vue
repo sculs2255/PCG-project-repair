@@ -1,86 +1,168 @@
 <template>
-  <v-responsive class="overflow-y-auto" height="500">
-    <v-row>
+  <v-card class="white" flat>
+    <v-row class="white" flat>
       <v-col cols="12" xs="6" sm="12" md="12" lg="6">
-
-        <v-card class="pa-3" flat>
-          <div v-if="cases">
+        <v-card v-if="cases.caseID == $route.params.detail" flat>
+          <v-card-title class="headline">
+            <v-icon size="40" color="grey darken-2"
+              >mdi-clipboard-list-outline</v-icon
+            >
+            <strong>Case ID :</strong>&ensp;{{ cases.caseID }}
+          </v-card-title>
+          <v-card-text class="center subtitle-1 dark--text">
+            <div class="text--primary pb-4">
+              &ensp;&ensp;<strong>Submit Date :</strong>&ensp;{{
+                cases.caseDate
+              }}
+            </div>
+            <div
+              class="text--primary pb-4"
+              v-if="cases.statusID == 2 && receivers.receiverDate != null"
+            >
+              &ensp;&ensp;<strong>Receiver Date :</strong>&ensp;{{
+                receivers.receiverDate
+              }}
+            </div>
+            <div
+              class="text--primary pb-4"
+              v-if="cases.statusID == 3 && receivers.receiverDate != null"
+            >
+              &ensp;&ensp;<strong>Receiver Date :</strong>&ensp;{{
+                receivers.receiverDate
+              }}
+            </div>
+            <div class="text--primary pb-4">
+              &ensp;&ensp;<strong>Case Type :</strong>&ensp;<v-chip
+                :color="getTColor(cases.caseTypeID)"
+              >
+                {{ getTName(cases.caseTypeID) }}
+              </v-chip>
+            </div>
+            <div class="text--primary pb-4">
+              &ensp;&ensp;<strong>Priority :</strong>&ensp;<v-chip
+                :color="getPColor(cases.priorityID)"
+              >
+                {{ getPName(cases.priorityID) }}
+              </v-chip>
+            </div>
+            <div class="text--primary pb-4">
+              &ensp;&ensp;<strong>Status :</strong>&ensp;
+              <v-chip :color="getSColor(cases.statusID)">
+                {{ getSName(cases.statusID) }}
+              </v-chip>
+            </div>
+          </v-card-text>
+          <div>
             <v-card-title class="headline">
-              ID Case : {{ cases.caseID }}
+              <strong>Case Informer</strong>
             </v-card-title>
-            <v-card-subtitle>
-              <div>
-                วันที่แจ้งแคส {{ cases.caseDate }}
+            <v-card-text class="center subtitle-1 dark--text">
+              <div class="text--primary pb-2">
+                <v-icon size="24" color="grey darken-2"
+                  >mdi-account-tie-outline</v-icon
+                >
+                <strong>Name :</strong>&ensp;{{ informers.firstName }}&ensp;{{
+                  informers.lastName
+                }}
               </div>
-            </v-card-subtitle>
-
-            <v-card-text class="subheading">
-              <div class="text--primary pb-4 text-h6">
-                User Information
+              <div class="text--primary pb-2">
+                <v-icon size="23" color="grey darken-2"
+                  >mdi-email-outline</v-icon
+                >
+                <strong>Email :</strong>&ensp;{{ informers.email }}
               </div>
-              <div class="text--primary pb-4 text-body-1">
-                name : {{ informers.firstName }} {{ informers.lastName }}
+              <div class="text--primary pb-2">
+                <v-icon size="23" color="grey darken-2">mdi-phone</v-icon>
+                <strong>Phone :</strong>&ensp;{{ informers.phone }}
               </div>
             </v-card-text>
           </div>
         </v-card>
       </v-col>
       <v-col cols="12" xs="6" sm="12" md="12" lg="6">
-        <v-card class="pa-3" flat>
-          <div >
+        <v-card v-if="cases" flat>
+          <div>
             <v-card-title class="headline">
-              Case Information
+              <strong>Case Informer</strong>
             </v-card-title>
-            <v-card-text class="subheading">
-              <div
-                class="primary--text pb-4 text-body-1 font-weight-black d-flex"
-              >
-                Type :
-                <div>{{ cases.caseTypeID }}</div>
+            <v-card-text class="center subtitle-1 dark--text">
+              <div class="text--primary pb-2">
+                <v-icon size="24" color="grey darken-2"
+                  >mdi-file-cog-outline</v-icon
+                >
+                <strong>System :</strong>&ensp;{{ cases.systemName }}
               </div>
-              <div class="text--primary pb-4 text-body-1">
-                System : {{ cases.systemID }}
+              <div class="text--primary pb-2" v-if="cases.moduleID != null">
+                <v-icon size="23" color="grey darken-2"
+                  >mdi-vector-triangle</v-icon
+                >
+                <strong>Module :</strong>&ensp;{{ cases.moduleName }}
               </div>
-              <div class="text--primary pb-4 text-body-1">
-                Module : {{ cases.moduleID }}
+              <div class="text--primary pb-2" v-if="cases.programID != null">
+                <v-icon size="23" color="grey darken-2"
+                  >mdi-application-brackets-outline</v-icon
+                >
+                <strong>Program ID :</strong>&ensp;{{ cases.programID }}
               </div>
-              <div class="text--primary pb-4 text-body-1">
-                Description : {{ cases.description }}
+              <div class="text--primary pb-2" v-if="cases.topic != null">
+                <v-icon size="23" color="grey darken-2"
+                  >mdi-book-outline</v-icon
+                >
+                <strong>Topic :</strong>&ensp;{{ cases.topic }}
               </div>
-              <div class="text--primary pb-4 text-body-1">
-                Image :
-                <v-dialog v-model="Imgdialog" width="50%" height="50%">
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-img
-                      v-bind="attrs"
-                      v-on="on"
-                      lazy-src="https://picsum.photos/id/11/10/6"
-                      max-height="150"
-                      max-width="250"
-                      src="https://picsum.photos/id/11/500/300"
-                    ></v-img>
-                  </template>
-
-                  <v-card>
-                    <v-img
-                      lazy-src="https://picsum.photos/id/11/10/6"
-                      src="https://picsum.photos/id/11/500/300"
-                    ></v-img>
-                  </v-card>
-                </v-dialog>
+              <div class="text--primary pb-2 " v-if="cases.topicID != null">
+                <v-icon size="23" color="grey darken-2"
+                  >mdi-book-outline</v-icon
+                >
+                <strong>Topic :</strong>&ensp;{{ cases.topicName }}
               </div>
-              <div class="text--primary pb-4 text-body-1">
-                Priority :
-                <v-chip :color="getPColor(cases.priorityID)">
-                  {{ getPName(cases.priorityID) }}
-                </v-chip>
+              <div class="text--primary pb-2">
+                <v-icon size="23" color="grey darken-2"
+                  >mdi-file-document-outline</v-icon
+                >
+                <strong>Description :</strong>&ensp;{{ cases.description }}
+              </div>
+              <div class="text--primary pb-2">
+                <v-icon size="23" color="grey darken-2">mdi-paperclip</v-icon>
+                <strong>File :</strong>&ensp;{{ cases.file }}
+              </div>
+              <div class="text--primary pb-2">
+                <v-icon size="23" color="grey darken-2"
+                  >mdi-note-outline</v-icon
+                >
+                <strong>Note :</strong>&ensp;{{ cases.note }}
+              </div>
+              <div class="text--primary pb-2">
+                <v-icon size="23" color="grey darken-2"
+                  >mdi-email-outline</v-icon
+                >
+                <strong>CC Mail :</strong>&ensp;{{ cases.ccMail }}
               </div>
             </v-card-text>
           </div>
         </v-card>
+      </v-col>
+      <v-col>
+        <v-card flat justify="center" align="center" v-if="cases.statusID == 1">
+          <v-btn
+            color="accent"
+            @click="
+              accept();
+              refresh;
+            "
+            >Accept</v-btn
+          >
+          <v-btn
+            color="primary"
+
+            >Home</v-btn
+          >
+          <v-btn color="error">Cancel</v-btn>
+        </v-card>
+        <hr class="my-0" v-if="cases.statusID != 1" />
       </v-col>
     </v-row>
-  </v-responsive>
+  </v-card>
 </template>
 
 <script>
@@ -88,11 +170,12 @@ export default {
   props: {
     id: { type: String, default: "" },
     cases: { type: Object, default: () => {} },
-    informers: { type: Object, default: () => {} }
+    informers: { type: Object, default: () => {} },
+    receivers: { type: Object, default: () => {} }
   },
   data() {
     return {
-     Imgdialog: false,
+      Imgdialog: false
       // cases: [
       //   {
       //     id: "1",
@@ -110,16 +193,59 @@ export default {
       // ]
     };
   },
+
   methods: {
-    getPColor(priority) {
-      if (priority === 1) return "error";
-      else if (priority === 2) return "warning";
-      else if (priority === 3) return "info";
+   refresh() {
+      setTimeout(function() {
+        location.reload();
+      }, 1);
     },
-    getPName(priority) {
-      if (priority === 1) return "High";
-      else if (priority === 2) return "Medium";
-      else if (priority === 3) return "Low";
+    async accept() {
+      await this.$store
+        .dispatch("receiver/update", { id: this.id })
+        .then(response => {
+          // Action Success
+
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    getPColor(priorityID) {
+      if (priorityID === 1) return "error";
+      else if (priorityID === 2) return "warning";
+      else if (priorityID === 3) return "info";
+    },
+    getSColor(statusID) {
+      if (statusID === 1) return "info";
+      else if (statusID === 2) return "warning";
+      else if (statusID === 3) return "success";
+      else if (statusID === 4) return "error";
+    },
+    getPColor(priorityID) {
+      if (priorityID === 1) return "error";
+      else if (priorityID === 2) return "warning";
+      else if (priorityID === 3) return "info";
+    },
+    getSName(statusID) {
+      if (statusID === 1) return "New Case";
+      else if (statusID === 2) return "In Progress";
+      else if (statusID === 3) return "Complete";
+      else if (statusID === 4) return "Cancel";
+    },
+    getPName(priorityID) {
+      if (priorityID === 1) return "High";
+      else if (priorityID === 2) return "Medium";
+      else if (priorityID === 3) return "Low";
+    },
+    getTColor(caseTypeID) {
+      if (caseTypeID === 1) return "success";
+      else return "secondary";
+    },
+    getTName(caseTypeID) {
+      if (caseTypeID === 1) return "Incident";
+      else return "Request";
     }
   }
 };

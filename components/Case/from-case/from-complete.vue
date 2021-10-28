@@ -1,95 +1,41 @@
 <template>
-  <v-responsive class="overflow-y-auto" max-height="500">
-    <v-row>
+  <v-card class="white" v-if="cases.caseID == $route.params.detail" flat>
+    <v-row class="white" flat>
       <v-col cols="12" xs="6" sm="12" md="12" lg="6">
-        <v-card class="pa-3 ma-5" flat>
-          <div v-if="cases">
+        <v-card flat>
+          <v-card-title class="headline">
+            <strong>IT Support Recipient</strong>
+          </v-card-title>
+          <v-card-text class="center subtitle-1 dark--text">
+            <div class="text--primary pb-2">
+              <v-icon size="24" color="grey darken-2"
+                >mdi-account-tie-outline</v-icon
+              >
+              <strong>Name :</strong>&ensp;{{ receivers.firstName }}&ensp;{{
+                receivers.lastName
+              }}
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-col>
+      <v-col cols="12" xs="6" sm="12" md="12" lg="6">
+        <v-card style="background-color:#EEEEEE">
+          <div>
             <v-card-title class="headline">
-              ID Case : {{ cases.caseID }}
+              <strong>Case Repair Information </strong>
             </v-card-title>
-            <v-card-subtitle>
-              <!-- <div>วันที่แจ้งแคส {{ cases.date }} -- {{ cases.time }}</div>
-              <div>วันที่รับแคส {{ cases.date }} -- {{ cases.time }}</div> -->
-            </v-card-subtitle>
             <v-card-text class="subheading">
-              <div class="text--primary pb-4 text-h6">
-                User Information
+              <div class="text--primary pb-2">
+                <v-icon size="23" color="grey darken-2"
+                  >mdi-file-document-outline</v-icon
+                >
+                <strong>Description :</strong>&ensp;{{ receivers.description }}
               </div>
-              <div class="text--primary pb-4 text-body-1">
-                name : {{ informers.firstName }} {{ informers.lastName }}
+              <div class="text--primary pb-2">
+                <v-icon size="23" color="grey darken-2">mdi-paperclip</v-icon>
+                <strong>File :</strong>&ensp;{{ receivers.file }}
               </div>
-            </v-card-text>
-          </div>
-        </v-card>
-      </v-col>
-      <v-col cols="12" xs="6" sm="12" md="12" lg="6">
-        <v-card class="pa-3 ma-5" style="background-color:#EEEEEE">
-          <div v-if="cases">
-            <v-card-text class="subheading">
-              <div class="text--primary pb-4 text-h6">
-                Case Information
-              </div>
-              <div class="text--primary pb-4 text-body-1">
-                Type : {{ cases.caseTypeID }}
-              </div>
-              <div class="text--primary pb-4 text-body-1">
-                System : {{ cases.systemID }}
-              </div>
-              <div class="text--primary pb-4 text-body-1">
-                Module : {{ cases.moduleID }}
-              </div>
-              <div class="text--primary pb-4 text-body-1">
-                Description : {{ cases.description }}
-              </div>
-              <div class="text--primary pb-4 text-body-1">
-                Image :
-                <v-img
-                  lazy-src="https://picsum.photos/id/11/10/6"
-                  max-height="100"
-                  max-width="150"
-                  src="https://picsum.photos/id/11/500/300"
-                ></v-img>
-              </div>
-              <div class="text--primary pb-4 text-body-1">
-                Priority :
-                <v-chip :color="getPColor(cases.priorityID)">
-                  {{ getPName(cases.priorityID) }}
-                </v-chip>
-              </div>
-            </v-card-text>
-          </div>
-        </v-card>
-      </v-col>
-      <v-col cols="12" xs="6" sm="12" md="12" lg="6">
-        <v-card class="pa-3 ma-5" flat>
-          <div v-if="cases">
-            <div class="text--primary pb-4 text-h6">
-              IT Support Recipient
-            </div>
-            <div class="text--primary pb-4 text-body-1">
-              Name : {{ receivers.firstName }} {{ receivers.lastName }}
-            </div>
-          </div>
-        </v-card>
-      </v-col>
-      <v-col cols="12" xs="6" sm="12" md="12" lg="6">
-        <v-card class="pa-3 ma-5" style="background-color:#EEEEEE">
-          <div v-if="cases">
-            <div class="text--primary pb-4 text-h6">
-              Repair Case Information
-            </div>
-            <v-card-text class="subheading">
-              <div class="text--primary pb-4 text-body-1">
-                System : {{ cases.systemID }}
-              </div>
-              <div class="text--primary pb-4 text-body-1">
-                Module : {{ cases.moduleID }}
-              </div>
-              <div class="text--primary pb-4 text-body-1">
-                Description : {{ cases.description }}
-              </div>
-
-              <div class="text--primary pb-4 text-body-1">
+              <!-- <div class="text--primary pb-4 text-body-1">
                 Image :
                 <v-chip
                   v-if="image"
@@ -115,18 +61,31 @@
                 >
                   file 1
                 </v-chip>
-              </div>
+              </div> -->
             </v-card-text>
           </div>
         </v-card>
       </v-col>
+      <v-col>
+        <v-card flat justify="center" align="center" v-if="cases.statusID == 3">
+          <v-btn
+            color="success"
+            @click="
+              accept();
+              refresh();
+            "
+            >Edit</v-btn
+          >
+          <v-btn color="red white--text">Close</v-btn>
+        </v-card>
+      </v-col>
     </v-row>
-  </v-responsive>
+  </v-card>
 </template>
 
 <script>
 export default {
-   props: {
+  props: {
     id: { type: String, default: "" },
     cases: { type: Object, default: () => {} },
     informers: { type: Object, default: () => {} },
@@ -135,7 +94,7 @@ export default {
   data() {
     return {
       image: true,
-      file: true,
+      file: true
       // cases: [
       //   {
       //     id: "1",
@@ -154,15 +113,22 @@ export default {
     };
   },
   methods: {
-    getPColor(priorityID) {
-      if (priorityID === 1) return "error";
-      else if (priorityID === 2) return "warning";
-      else return "info";
+    refresh() {
+      setTimeout(function() {
+        location.reload();
+      }, 1);
     },
-    getPName(priorityID) {
-      if (priorityID === 1) return "High";
-      else if (priorityID === 2) return "Medium";
-      else return "Low";
+    async accept() {
+      await this.$store
+        .dispatch("receiver/update", { id: this.id })
+        .then(response => {
+          // Action Success
+
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 };
