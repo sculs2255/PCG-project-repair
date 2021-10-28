@@ -1,12 +1,11 @@
 <template>
   <v-card class="pa-2 rounded-lg elevation-4">
-    {{$auth.user.user}}
     <v-autocomplete
       cache-items
       flat
       hide-no-data
       hide-details
-      label="Select Workplace"
+      label="Select Branch"
       solo-inverted
       class="ma-2 rounded-pill"
       style="width:40%"
@@ -16,9 +15,9 @@
       ref="form"
       :loading="loading_dts"
       :headers="headers"
-      :items="workplaceList.data"
+      :items="branchList.data"
       :options.sync="optionDataTables"
-      :server-items-length="workplaceList.totalItems"
+      :server-items-length="branchList.totalItems"
       sort-by="id"
       class="datatable-listing-app"
       fixed-header
@@ -28,7 +27,7 @@
     >
       <template v-slot:top>
         <v-toolbar flat color="white">
-          <v-toolbar-title>workplace</v-toolbar-title>
+          <v-toolbar-title>Branch</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
           <v-spacer></v-spacer>
           <v-dialog v-model="dialog" max-width="500px">
@@ -39,38 +38,35 @@
             </template>
             <v-card>
               <v-card-title>
-                <span class="headline">workplace</span>
+                <span class="headline">Branch</span>
               </v-card-title>
               <v-card-text>
                 <v-container>
                   <v-row>
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="form.WorkplaceID"
-                        label="IdWorkplace "
+                        v-model="form.BranchID"
+                        label="IdBranch "
                         required
 
                       ></v-text-field>
                     </v-col>
-                     <v-col cols="12" sm="6" md="4">
-                      <v-text-field
-                        v-model="form.UserID"
-                        label="IdUser "
-                        required
-
-                      ></v-text-field>
-                    </v-col>
-
-
 
                     <v-col cols="12" sm="6" md="4">
                       <v-text-field
-                        v-model="form.DepartmentID"
-                        label="IDDepartment"
+                        v-model="form.CountryID"
+                        label="IDCountry"
                         required
                       ></v-text-field>
                     </v-col>
+                    <v-col cols="12" sm="6" md="4">
+                      <v-text-field
+                        v-model="form.BranchName"
+                        label="Branch "
+                        required
 
+                      ></v-text-field>
+                    </v-col>
                   </v-row>
                 </v-container>
               </v-card-text>
@@ -105,9 +101,11 @@ export default {
     return {
       dialog: false,
       form: {
-        BranchID: '',
+        WorkplaceID: '',
         CountryID:'',
-        BranchName: ""
+        BranchID: '',
+        UserID : "",
+        Department : ' ',
       },
       filter: {
         textSearch: "",
@@ -118,12 +116,14 @@ export default {
       optionDataTables: {},
       loading_dts: false,
       headers: [
-        { text: "workplace ID", value: "workplaceID", filterable: false },
-        { text: "user ID", value: "userID", filterable: false },
-        
-        { text: "depaerment ID", value: "departmentID", filterable: false },
+        { text: "Workplace ID", value: "workplaceID", filterable: false },
+        { text: "User ID", value: "userID", filterable: false },
+        { text: "Country ID", value: "countryID", filterable: false },
+        { text: "Branch ID", value: "branchID", filterable: false },
+        { text: "Department ID", value: "departmentID", filterable: false },
+
         {
-          text: "Details / Cancel Workplace",
+          text: "Details / Cancel country",
           value: "actions",
           filterable: false,
           sortable: false
@@ -147,8 +147,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      getDataList: "workplace/getDataList",
-      getInfoEdit: "workplace/getInfo"
+      getDataList: "branch/getDataList",
+      getInfoEdit: "branch/getInfo"
     }),
     async _getDataList() {
       const { page, itemsPerPage, sortBy, sortDesc } = this.optionDataTables;
@@ -165,15 +165,15 @@ export default {
 
     async edit(item) {
       this.action_form = "Edit";
-      await this.getInfoEdit({ id: item.workplaceID });
-      this.form.WorkplaceID = this.edit_info.data.WorkplaceID;
-
+      await this.getInfoEdit({ id: item.branchID });
+      this.form.BranchID = this.edit_info.data.BranchID;
+      this.form.BranchName = this.edit_info.data.BranchName;
       this.dialog = true;
     },
     async submit() {
       if (this.action_form == "Edit") {
         await this.$store
-          .dispatch("workplace/update", this.form)
+          .dispatch("branch/update", this.form)
           .then(response => {
             console.log(response);
 
@@ -183,7 +183,7 @@ export default {
           });
       } else {
         await this.$store
-          .dispatch("workplace/create", this.form)
+          .dispatch("branch/create", this.form)
           .then(response => {
             console.log(response);
           })
@@ -197,7 +197,7 @@ export default {
     async deleteData(item) {
       console.log(item);
       await this.$store
-        .dispatch("workplace/delete", { id: item.workplaceID })
+        .dispatch("branch/delete", { id: item.branchID })
         .then(response => {
           this._getDataList();
           console.log(response);
