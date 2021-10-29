@@ -27,7 +27,7 @@
       <template #[`item.caseTypeID`]="{ item }">
         {{ getTName(item.caseTypeID) }}
       </template>
-       <template #[`item.priorityID`]="{ item }">
+      <template #[`item.priorityID`]="{ item }">
         <v-chip :color="getPColor(item.priorityID)" dark>
           {{ getPName(item.priorityID) }}
         </v-chip>
@@ -67,23 +67,21 @@ export default {
       optionDataTables: {},
       loading_dts: false,
       headers: [
-        { text: "Case ID", value: "caseID", filterable: false },
-        { text: "Type", value: "caseTypeID", filterable: false },
-        { text: "Topic", value: "topic", filterable: false },
+        { text: "Case ID", value: "caseID" },
+        { text: "Type", value: "caseTypeID" },
+        { text: "Topic", value: "topic" },
         {
-          text: "Submit Date",
+          text: "Date",
           value: "caseDate",
-          filterable: false,
           sortable: false
         },
-        { text: "Informer", value: "firstName", filterable: false },
-        { text: "Receiver", value: "reUserID", filterable: false },
-        { text: "Priority", value: "priorityID", filterable: false },
-        { text: "Status", value: "statusID", filterable: false },
+        { text: "Informer", value: "userName" },
+        { text: "Receiver", value: "reName" },
+        { text: "Priority", value: "priorityID" },
+        { text: "Status", value: "statusID" },
         {
-          text: "Details / Cancel Case",
+          text: "Details ",
           value: "button",
-          filterable: false,
           sortable: false
         }
       ]

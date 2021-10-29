@@ -21,7 +21,6 @@
       sort-by="id"
       class="datatable-listing-app"
       fixed-header
-      height="100%"
       hide-default-footer
     >
       <template #[`item.caseTypeID`]="{ item }">
@@ -71,17 +70,17 @@ export default {
         { text: "Type", value: "caseTypeID", filterable: false },
         { text: "Topic", value: "topic", filterable: false },
         {
-          text: "Submit Date",
+          text: "Date",
           value: "caseDate",
           filterable: false,
           sortable: false
         },
-        { text: "Informer", value: "firstName", filterable: false },
-        { text: "Receiver", value: "reUserID", filterable: false },
+        { text: "Informer", value: "userName", filterable: false },
+        { text: "Receiver", value: "reName", filterable: false },
         { text: "Priority", value: "priorityID", filterable: false },
         { text: "Status", value: "statusID", filterable: false },
         {
-          text: "Details / Cancel Case",
+          text: "Details",
           value: "button",
           filterable: false,
           sortable: false
