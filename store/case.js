@@ -41,6 +41,21 @@ export const actions = {
         const res = await this.$axios.$get(url, config);
         commit('resData', res)
     },
+    async getDataMyList({ commit }, params) {
+      var queryString = Object.keys(params).map(function (key) {
+          if (params[key] == null) params[key] = "";
+          return key + '=' + params[key]
+      }).join('&') ;
+
+      console.log(params);
+      console.log(queryString);
+
+
+      const url = routeAPI.case.my_list + "?" + queryString;
+      const config = { headers: { Authorization: this.$auth.getToken('local') } }
+      const res = await this.$axios.$get(url, config);
+      commit('resData', res)
+  },
     async getInfo({ commit }, { id }) {
         const url = routeAPI.case.main + "/" + id;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
@@ -55,7 +70,7 @@ export const actions = {
         return res;
     },
     async update({ commit }, params) {
-        const url = routeAPI.case.main + "/" + params.code;
+        const url = routeAPI.case.main + "/" + params.id;
         const config = { headers: { Authorization: this.$auth.getToken('local') } }
         const res = await this.$axios.$put(url, params, config);
         return res;

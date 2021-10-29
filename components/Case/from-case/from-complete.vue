@@ -22,16 +22,23 @@
         <v-card style="background-color:#EEEEEE">
           <div>
             <v-card-title class="headline">
-              <strong>Case Repair Information </strong>
+              <strong v-if="cases.statusID == 3">Case Repair Information </strong>
+                <strong v-if="cases.statusID == 4">Case Cancel Information </strong>
             </v-card-title>
             <v-card-text class="subheading">
-              <div class="text--primary pb-2">
+              <div class="text--primary pb-2" v-if="cases.statusID == 3">
                 <v-icon size="23" color="grey darken-2"
                   >mdi-file-document-outline</v-icon
                 >
                 <strong>Description :</strong>&ensp;{{ receivers.description }}
               </div>
-              <div class="text--primary pb-2">
+              <div class="text--primary pb-2" v-if="cases.statusID == 4">
+                <v-icon size="23" color="grey darken-2"
+                  >mdi-file-document-outline</v-icon
+                >
+                <strong>Reason :</strong>&ensp;{{ cancels.reason }}
+              </div>
+              <div class="text--primary pb-2" v-if="cases.statusID == 3">
                 <v-icon size="23" color="grey darken-2">mdi-paperclip</v-icon>
                 <strong>File :</strong>&ensp;{{ receivers.file }}
               </div>
@@ -67,8 +74,9 @@
         </v-card>
       </v-col>
       <v-col>
-        <v-card flat justify="center" align="center" v-if="cases.statusID == 3">
+        <v-card flat justify="center" align="center" v-if="cases.statusID == 3 || cases.statusID == 4">
           <v-btn
+          v-if="cases.statusID == 3"
             color="success"
             @click="
               accept();
@@ -89,7 +97,8 @@ export default {
     id: { type: String, default: "" },
     cases: { type: Object, default: () => {} },
     informers: { type: Object, default: () => {} },
-    receivers: { type: Object, default: () => {} }
+    receivers: { type: Object, default: () => {} },
+    cancels: { type: Object, default: () => {} }
   },
   data() {
     return {

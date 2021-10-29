@@ -31,6 +31,7 @@
                 receivers.receiverDate
               }}
             </div>
+
             <div class="text--primary pb-4">
               &ensp;&ensp;<strong>Case Type :</strong>&ensp;<v-chip
                 :color="getTColor(cases.caseTypeID)"
@@ -54,7 +55,7 @@
           </v-card-text>
           <div>
             <v-card-title class="headline">
-              <strong>Case Informer</strong>
+              <strong>User Informer</strong>
             </v-card-title>
             <v-card-text class="center subtitle-1 dark--text">
               <div class="text--primary pb-2">
@@ -80,7 +81,7 @@
         </v-card>
       </v-col>
       <v-col cols="12" xs="6" sm="12" md="12" lg="6">
-        <v-card v-if="cases" flat>
+        <v-card v-if="cases" flat style="background-color:#EEEEEE">
           <div>
             <v-card-title class="headline">
               <strong>Case Informer</strong>
@@ -148,16 +149,73 @@
             color="accent"
             @click="
               accept();
-              refresh;
+              refresh();
             "
             >Accept</v-btn
           >
-          <v-btn
-            color="primary"
-
-            >Home</v-btn
-          >
-          <v-btn color="error">Cancel</v-btn>
+          <v-btn color="primary">Home</v-btn>
+          <v-btn color="error" @click="dialogCancel = true">Cancel</v-btn>
+          <v-dialog v-model="dialogCancel" persistent max-width="600px">
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">Cancel Case</span>
+              </v-card-title>
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <!-- <v-col cols="12" sm="12" md="12">
+                      <v-autocomplete
+                        :items="[
+                          'Skiing',
+                          'Ice hockey',
+                          'Soccer',
+                          'Basketball',
+                          'Hockey',
+                          'Reading',
+                          'Writing',
+                          'Coding',
+                          'Basejump'
+                        ]"
+                        label="Cause cancel List"
+                      ></v-autocomplete>
+                    </v-col> -->
+                    <v-col cols="12" sm="12" md="12">
+                      <v-textarea
+                        label="Cause cancel"
+                        filled
+                        solo
+                        rows="4"
+                        no-resize
+                        class="height:50px"
+                        required
+                        v-model="form.reason"
+                      >
+                      </v-textarea>
+                    </v-col>
+                  </v-row>
+                </v-container>
+                <small>*indicates required field</small>
+              </v-card-text>
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn text color="error" @click="dialogCancel = false">
+                  Close
+                </v-btn>
+                <v-btn
+                  text
+                  color="success"
+                  @click="
+                    dialogCancel = false;
+                    refresh();
+                    cancelCase();
+                    to = './case';
+                  "
+                >
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-card>
         <hr class="my-0" v-if="cases.statusID != 1" />
       </v-col>
@@ -175,7 +233,12 @@ export default {
   },
   data() {
     return {
-      Imgdialog: false
+      dialogCancel: false,
+      Imgdialog: false,
+      form: {
+        id: this.id,
+        reason: ""
+      }
       // cases: [
       //   {
       //     id: "1",
@@ -195,7 +258,7 @@ export default {
   },
 
   methods: {
-   refresh() {
+    refresh() {
       setTimeout(function() {
         location.reload();
       }, 1);
@@ -203,6 +266,18 @@ export default {
     async accept() {
       await this.$store
         .dispatch("receiver/update", { id: this.id })
+        .then(response => {
+          // Action Success
+
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    async cancelCase() {
+      await this.$store
+        .dispatch("case/update", this.form)
         .then(response => {
           // Action Success
 

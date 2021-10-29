@@ -16,7 +16,8 @@ export default {
   },
 
   case: {
-    main: url + "/Case"
+    main: url + "/Case",
+    my_list: url + "/Case/List"
   },
   status: {
     main: url + "/Status"
@@ -53,7 +54,9 @@ export default {
   informer: {
     main: url + "/Informer"
   },
-
+  cancel: {
+    main: url + "/Cancel"
+  },
   workplace: {
     main: url + "/Workplace"
   }

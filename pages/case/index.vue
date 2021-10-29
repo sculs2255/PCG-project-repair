@@ -24,7 +24,10 @@
       height="100%"
       hide-default-footer
     >
-      <template #[`item.priorityID`]="{ item }">
+      <template #[`item.caseTypeID`]="{ item }">
+        {{ getTName(item.caseTypeID) }}
+      </template>
+       <template #[`item.priorityID`]="{ item }">
         <v-chip :color="getPColor(item.priorityID)" dark>
           {{ getPName(item.priorityID) }}
         </v-chip>
@@ -147,6 +150,10 @@ export default {
       else if (statusID == 2) return "In Progrees";
       else if (statusID == 3) return "Complete";
       else return "Cancel";
+    },
+    getTName(caseTypeID) {
+      if (caseTypeID === 1) return "Incident";
+      else return "Request";
     }
   },
   async fetch() {}
